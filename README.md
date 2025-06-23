@@ -1,46 +1,209 @@
-# Getting Started with Create React App
+# Código del Proyecto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## src\App.test.tsx
 
-## Available Scripts
+```
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-In the project directory, you can run:
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
 
-### `npm start`
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## src\App.tsx
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+import React from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
 
-### `npm test`
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <HeroSection />
+    </div>
+  );
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default App;
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## src\components\Header.tsx
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+import React from "react";
+import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
+import "./Header.css";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const Header = () => {
+  return (
+    <Navbar expand="lg" className="custom-navbar px-3 px-md-4" variant="dark">
+      <div className="pattern-overlay"></div>
+      <div className="container-fluid position-relative" style={{ zIndex: 2 }}>
+        <div className="d-flex align-items-center flex-wrap w-100">
+          <Nav className="me-auto d-flex flex-row">
+            <Nav.Link href="#inicio" className="nav-button me-2 me-md-3">
+              Inicio
+            </Nav.Link>
+            <Nav.Link href="#catalogo" className="nav-button me-2 me-md-3">
+              Catálogo
+            </Nav.Link>
+            <Nav.Link href="#contacto" className="nav-button">
+              Contacto
+            </Nav.Link>
+          </Nav>
 
-### `npm run eject`
+          <Form className="search-form mt-2 mt-lg-0">
+            <InputGroup>
+              <Form.Control
+                type="search"
+                placeholder="Buscar productos..."
+                className="search-input"
+              />
+            </InputGroup>
+          </Form>
+        </div>
+      </div>
+    </Navbar>
+  );
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+export default Header;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## src\components\HeroSection.tsx
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+import React from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import "./HeroSection.css";
 
-## Learn More
+const HeroSection = () => {
+  return (
+    <Container fluid className="hero-section">
+      <div className="pattern-overlay"></div>
+      <Container className="position-relative" style={{ zIndex: 2 }}>
+        <Row className="justify-content-center align-items-center min-vh-80">
+          <Col lg={8} md={10} xs={12} className="text-center">
+            <div className="logo-container mb-4">
+              <div className="logo-circle">
+                <img
+                  src="/logo.png"
+                  alt="El Sapito 3D Logo"
+                  className="logo-image"
+                />
+              </div>
+              <div className="logo-text">
+                <div className="logo-title">EL SAPITO</div>
+                <div className="logo-subtitle">3D</div>
+              </div>
+            </div>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+            <h1 className="hero-title mb-3">Servicio de impresiones 3D FDM</h1>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+            <p className="hero-subtitle mb-4">
+              Transformamos tus ideas en realidad con tecnología
+              <br />
+              de vanguardia y materiales de primera calidad
+            </p>
+
+            <div className="button-group">
+              <Button
+                variant="outline-light"
+                size="lg"
+                className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
+              >
+                Ver catálogo
+              </Button>
+              <Button
+                variant="outline-light"
+                size="lg"
+                className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
+              >
+                Envíos
+              </Button>
+              <Button
+                variant="outline-light"
+                size="lg"
+                className="hero-button instagram-button"
+              >
+                Instagram
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </Container>
+  );
+};
+
+export default HeroSection;
+
+```
+
+## src\index.tsx
+
+```
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+```
+
+## src\react-app-env.d.ts
+
+```
+/// <reference types="react-scripts" />
+
+```
+
+## src\reportWebVitals.ts
+
+```
+import { ReportHandler } from 'web-vitals';
+
+const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+  if (onPerfEntry && onPerfEntry instanceof Function) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(onPerfEntry);
+      getFID(onPerfEntry);
+      getFCP(onPerfEntry);
+      getLCP(onPerfEntry);
+      getTTFB(onPerfEntry);
+    });
+  }
+};
+
+export default reportWebVitals;
+
+```
+
+## src\setupTests.ts
+
+```
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import '@testing-library/jest-dom';
+
+```
+
