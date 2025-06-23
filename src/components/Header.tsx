@@ -70,7 +70,7 @@ const Header = () => {
             </Nav>
           </Navbar.Collapse>
 
-          <Form className="search-form col-4 d-none d-lg-block">
+          <Form className="search-form col-3 d-none d-lg-block">
             <InputGroup>
               <div className="input-group position-relative">
                 <i className="bx bx-search search-icon"></i>
@@ -82,7 +82,7 @@ const Header = () => {
               </div>
             </InputGroup>
           </Form>
-          <div className="col-4 transparent-div"></div>
+          <div className=" col-4 transparent-div"></div>
         </div>
       </Navbar>
     </>
