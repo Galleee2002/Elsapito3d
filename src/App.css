@@ -21,7 +21,7 @@ body {
   background-repeat: no-repeat;
   position: relative;
 }
-.red .App::before {
+.App::before {
   content: "";
   position: absolute;
   top: 0;
