@@ -32,25 +32,25 @@
 }
 
 .animate-logo {
-  animation: fadeInScale 0.8s ease-out 0.1s;
+  animation: fadeInScale 1.2s ease-out 0.6s;
   animation-fill-mode: both;
   opacity: 0;
 }
 
 .animate-title {
-  animation: fadeInUp 0.8s ease-out 0.4s;
+  animation: fadeInUp 1.2s ease-out 0.7s;
   animation-fill-mode: both;
   opacity: 0;
 }
 
 .animate-subtitle {
-  animation: fadeInUp 0.8s ease-out 0.7s;
+  animation: fadeInUp 1.2s ease-out 0.7s;
   animation-fill-mode: both;
   opacity: 0;
 }
 
 .animate-buttons {
-  animation: fadeInScale 0.8s ease-out 1s;
+  animation: fadeInScale 1.2s ease-out 0.8s;
   animation-fill-mode: both;
   opacity: 0;
 }
