@@ -21,7 +21,6 @@ const Header = () => {
           className="container-fluid position-relative"
           style={{ zIndex: 2 }}
         >
-          {/* Toggler button para móvil */}
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="navbar-toggler ms-auto"
@@ -32,7 +31,6 @@ const Header = () => {
             ></i>
           </Navbar.Toggle>
 
-          {/* Menu colapsable */}
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto d-flex flex-column col-md-3 col-12 flex-lg-row">
               <Nav.Link
@@ -71,7 +69,7 @@ const Header = () => {
               </div>
             </Nav>
           </Navbar.Collapse>
-          {/* Buscador para desktop */}
+
           <Form className="search-form col-4 d-none d-lg-block">
             <InputGroup>
               <div className="input-group position-relative">
