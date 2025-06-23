@@ -14,7 +14,7 @@ function obtenerArchivos(dir) {
 
     if (stat.isDirectory()) {
       archivos = archivos.concat(obtenerArchivos(rutaCompleta));
-    } else if (/\.(js|ts|jsx|tsx)$/.test(rutaCompleta)) {
+    } else if (/\.(js|ts|jsx|tsx|css)$/.test(rutaCompleta)) {
       archivos.push(rutaCompleta);
     }
   });
