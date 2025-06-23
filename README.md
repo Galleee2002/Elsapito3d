@@ -46,34 +46,88 @@ import "./Header.css";
 
 const Header = () => {
   return (
-    <Navbar expand="lg" className="custom-navbar px-3 px-md-4" variant="dark">
-      <div className="pattern-overlay"></div>
-      <div className="container-fluid position-relative" style={{ zIndex: 2 }}>
-        <div className="d-flex align-items-center flex-wrap w-100">
-          <Nav className="me-auto d-flex flex-row">
-            <Nav.Link href="#inicio" className="nav-button me-2 me-md-3">
-              Inicio
-            </Nav.Link>
-            <Nav.Link href="#catalogo" className="nav-button me-2 me-md-3">
-              Catálogo
-            </Nav.Link>
-            <Nav.Link href="#contacto" className="nav-button">
-              Contacto
-            </Nav.Link>
-          </Nav>
+    <>
+      {/* Box Icons CDN */}
+      <link
+        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        rel="stylesheet"
+      />
 
-          <Form className="search-form mt-2 mt-lg-0">
+      <Navbar
+        expand="lg"
+        className="custom-navbar row px-3 px-md-4"
+        variant="dark"
+      >
+        <div className="pattern-overlay"></div>
+        <div
+          className="container-fluid position-relative"
+          style={{ zIndex: 2 }}
+        >
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            className="navbar-toggler ms-auto"
+          >
+            <i
+              className="bx bx-menu text-white"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
+          </Navbar.Toggle>
+
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto d-flex flex-column col-md-3 col-12 flex-lg-row">
+              <Nav.Link
+                href="#inicio"
+                className="nav-button me-lg-3 mb-2 mb-lg-0"
+              >
+                <i className="bx bx-home-alt"></i>
+                Inicio
+              </Nav.Link>
+              <Nav.Link
+                href="#catalogo"
+                className="nav-button me-lg-3 mb-2 mb-lg-0"
+              >
+                <i className="bx bx-grid-alt"></i>
+                Catálogo
+              </Nav.Link>
+              <Nav.Link href="#contacto" className="nav-button mb-2 mb-lg-0">
+                <i className="bx bx-message-dots"></i>
+                Contacto
+              </Nav.Link>
+
+              {/* Buscador para móvil */}
+              <div className="d-lg-none mt-3">
+                <Form className="search-form-mobile">
+                  <InputGroup>
+                    <div className="input-group position-relative">
+                      <i className="bx bx-search search-icon"></i>
+                      <Form.Control
+                        type="search"
+                        placeholder="Buscar productos..."
+                        className="search-input"
+                      />
+                    </div>
+                  </InputGroup>
+                </Form>
+              </div>
+            </Nav>
+          </Navbar.Collapse>
+
+          <Form className="search-form col-3 d-none d-lg-block">
             <InputGroup>
-              <Form.Control
-                type="search"
-                placeholder="Buscar productos..."
-                className="search-input"
-              />
+              <div className="input-group position-relative">
+                <i className="bx bx-search search-icon"></i>
+                <Form.Control
+                  type="search"
+                  placeholder="Buscar productos..."
+                  className="search-input"
+                />
+              </div>
             </InputGroup>
           </Form>
+          <div className=" col-4 transparent-div"></div>
         </div>
-      </div>
-    </Navbar>
+      </Navbar>
+    </>
   );
 };
 
@@ -91,11 +145,10 @@ import "./HeroSection.css";
 const HeroSection = () => {
   return (
     <Container fluid className="hero-section">
-      <div className="pattern-overlay"></div>
       <Container className="position-relative" style={{ zIndex: 2 }}>
         <Row className="justify-content-center align-items-center min-vh-80">
           <Col lg={8} md={10} xs={12} className="text-center">
-            <div className="logo-container mb-4">
+            <div className="logo-container">
               <div className="logo-circle">
                 <img
                   src="/logo.png"
@@ -103,42 +156,45 @@ const HeroSection = () => {
                   className="logo-image"
                 />
               </div>
-              <div className="logo-text">
-                <div className="logo-title">EL SAPITO</div>
-                <div className="logo-subtitle">3D</div>
-              </div>
             </div>
 
-            <h1 className="hero-title mb-3">Servicio de impresiones 3D FDM</h1>
+            <div className="content-container">
+              <h1 className="hero-title mb-3">
+                Servicio de impresiones 3D FDM
+              </h1>
 
-            <p className="hero-subtitle mb-4">
-              Transformamos tus ideas en realidad con tecnología
-              <br />
-              de vanguardia y materiales de primera calidad
-            </p>
+              <p className="hero-subtitle mb-4">
+                Transformamos tus ideas en realidad con tecnología
+                <br />
+                de vanguardia y materiales de primera calidad
+              </p>
 
-            <div className="button-group">
-              <Button
-                variant="outline-light"
-                size="lg"
-                className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
-              >
-                Ver catálogo
-              </Button>
-              <Button
-                variant="outline-light"
-                size="lg"
-                className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
-              >
-                Envíos
-              </Button>
-              <Button
-                variant="outline-light"
-                size="lg"
-                className="hero-button instagram-button"
-              >
-                Instagram
-              </Button>
+              <div className="button-group">
+                <Button
+                  variant="outline-light"
+                  size="lg"
+                  className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
+                >
+                  <i className="bx bx-grid-alt"></i>
+                  Ver catálogo
+                </Button>
+                <Button
+                  variant="outline-light"
+                  size="lg"
+                  className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
+                >
+                  <i className="bx bx-package"></i>
+                  Envíos
+                </Button>
+                <Button
+                  variant="outline-light"
+                  size="lg"
+                  className="hero-button instagram-button"
+                >
+                  <i className="bx bxl-instagram"></i>
+                  Instagram
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>

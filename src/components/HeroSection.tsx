@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./HeroSection.css";
+import "./animations.css";
 
 const HeroSection = () => {
   return (
@@ -8,7 +9,7 @@ const HeroSection = () => {
       <Container className="position-relative" style={{ zIndex: 2 }}>
         <Row className="justify-content-center align-items-center min-vh-80">
           <Col lg={8} md={10} xs={12} className="text-center">
-            <div className="logo-container">
+            <div className="logo-container animate-logo">
               <div className="logo-circle">
                 <img
                   src="/logo.png"
@@ -19,17 +20,17 @@ const HeroSection = () => {
             </div>
 
             <div className="content-container">
-              <h1 className="hero-title mb-3">
+              <h1 className="hero-title mb-3 animate-title">
                 Servicio de impresiones 3D FDM
               </h1>
 
-              <p className="hero-subtitle mb-4">
+              <p className="hero-subtitle mb-4 animate-subtitle">
                 Transformamos tus ideas en realidad con tecnología
                 <br />
                 de vanguardia y materiales de primera calidad
               </p>
 
-              <div className="button-group">
+              <div className="button-group animate-buttons">
                 <Button
                   variant="outline-light"
                   size="lg"
