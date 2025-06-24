@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "./Catalog.css";
 
 interface Product {
@@ -104,14 +104,15 @@ const Catalog = () => {
       }
     );
 
-    cardRefs.current.forEach((card) => {
+    const currentCards = cardRefs.current;
+    currentCards.forEach((card) => {
       if (card) {
         observer.observe(card);
       }
     });
 
     return () => {
-      cardRefs.current.forEach((card) => {
+      currentCards.forEach((card) => {
         if (card) {
           observer.unobserve(card);
         }
@@ -156,6 +157,28 @@ const Catalog = () => {
     };
   }, [isModalOpen]);
 
+  const nextImage = useCallback(() => {
+    if (
+      selectedProduct &&
+      currentImageIndex < selectedProduct.images.length - 1
+    ) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  }, [selectedProduct, currentImageIndex]);
+
+  const prevImage = useCallback(() => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  }, [currentImageIndex]);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+    setCurrentImageIndex(0);
+    setIsFullscreen(false);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -175,39 +198,21 @@ const Catalog = () => {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen, selectedProduct, currentImageIndex, isFullscreen]);
-
-  const toggleDropdown = (productId: number) => {
-    setActiveDropdown(activeDropdown === productId ? null : productId);
-  };
+  }, [
+    isModalOpen,
+    selectedProduct,
+    currentImageIndex,
+    isFullscreen,
+    nextImage,
+    prevImage,
+    closeModal,
+  ]);
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
     setActiveDropdown(null);
     setCurrentImageIndex(0);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-    setCurrentImageIndex(0);
-    setIsFullscreen(false);
-  };
-
-  const nextImage = () => {
-    if (
-      selectedProduct &&
-      currentImageIndex < selectedProduct.images.length - 1
-    ) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
   };
 
   const goToImage = (index: number) => {
