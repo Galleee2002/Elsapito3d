@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import Catalog from "./components/Catalog";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <HeroSection />
       <Catalog />
+      <Footer />
     </div>
   );
 }
