@@ -285,6 +285,66 @@
   object-fit: cover;
   border-radius: 15px;
   transition: opacity 0.3s ease;
+  cursor: zoom-in;
+}
+
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: zoom-out;
+  animation: fadeIn 0.3s ease;
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.fullscreen-close:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.fullscreen-image {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .nav-arrow {
@@ -667,6 +727,18 @@
     width: 30px;
     height: 30px;
   }
+  .fullscreen-close {
+    top: 15px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .fullscreen-image {
+    max-width: 98vw;
+    max-height: 98vh;
+  }
 }
 
 @media (max-width: 350px) {
@@ -732,7 +804,11 @@
     transition: none;
   }
 
-  .modal-image {
-    transition: none;
+  .fullscreen-overlay {
+    animation: none;
+  }
+
+  .fullscreen-image {
+    animation: none;
   }
 }

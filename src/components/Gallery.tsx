@@ -1,0 +1,134 @@
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import "./Gallery.css";
+
+interface GalleryItem {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  color: string;
+}
+
+const Gallery = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const galleryItems: GalleryItem[] = [
+    {
+      id: 1,
+      image: "/tarjetero.jpg",
+      title: "Trabajos de Precisión",
+      description:
+        "Cada pieza impresa con la máxima calidad y atención al detalle",
+      color: "#77bb54",
+    },
+    {
+      id: 2,
+      image: "/api/placeholder/400/300",
+      title: "Diseños Únicos",
+      description:
+        "Creaciones personalizadas adaptadas a tus necesidades específicas",
+      color: "#4ECDC4",
+    },
+    {
+      id: 3,
+      image: "/api/placeholder/400/280",
+      title: "Materiales Premium",
+      description:
+        "Utilizamos solo los mejores filamentos para garantizar durabilidad",
+      color: "#FF6B6B",
+    },
+    {
+      id: 4,
+      image: "/api/placeholder/400/320",
+      title: "Entregas Rápidas",
+      description:
+        "Tiempos de producción optimizados sin comprometer la calidad",
+      color: "#45B7D1",
+    },
+    {
+      id: 5,
+      image: "/api/placeholder/400/290",
+      title: "Satisfacción Garantizada",
+      description:
+        "Tu conformidad es nuestra prioridad en cada proyecto realizado",
+      color: "#96CEB4",
+    },
+  ];
+
+  const currentItem = galleryItems[currentIndex];
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === galleryItems.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? galleryItems.length - 1 : prevIndex - 1
+    );
+  };
+
+  return (
+    <section className="gallery-section">
+      <Container>
+        <Row className="justify-content-center">
+          <Col lg={8} md={10} xs={12}>
+            <div className="gallery-container">
+              <div className="gallery-image-wrapper">
+                <img
+                  src={currentItem.image}
+                  alt={currentItem.title}
+                  className="gallery-image"
+                  key={currentItem.id}
+                />
+                <div className="gallery-overlay"></div>
+
+                <button
+                  className="gallery-arrow gallery-arrow-left"
+                  onClick={prevSlide}
+                >
+                  ←
+                </button>
+                <button
+                  className="gallery-arrow gallery-arrow-right"
+                  onClick={nextSlide}
+                >
+                  →
+                </button>
+              </div>
+
+              <div
+                className="gallery-content"
+                style={{ color: currentItem.color }}
+              >
+                <h3 className="gallery-title">{currentItem.title}</h3>
+                <p className="gallery-description">{currentItem.description}</p>
+              </div>
+
+              <div className="gallery-indicators">
+                {galleryItems.map((item, index) => (
+                  <button
+                    key={index}
+                    className={`indicator ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                    onClick={() => goToSlide(index)}
+                    style={{ backgroundColor: item.color }}
+                  />
+                ))}
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </section>
+  );
+};
+
+export default Gallery;

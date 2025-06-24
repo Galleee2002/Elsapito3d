@@ -22,6 +22,7 @@ const Catalog = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const products: Product[] = [
     {
@@ -157,20 +158,24 @@ const Catalog = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isModalOpen || !selectedProduct) return;
-
       if (event.key === "Escape") {
-        closeModal();
-      } else if (event.key === "ArrowRight") {
-        nextImage();
-      } else if (event.key === "ArrowLeft") {
-        prevImage();
+        if (isFullscreen) {
+          setIsFullscreen(false);
+        } else if (isModalOpen) {
+          closeModal();
+        }
+      } else if (isModalOpen && !isFullscreen && selectedProduct) {
+        if (event.key === "ArrowRight") {
+          nextImage();
+        } else if (event.key === "ArrowLeft") {
+          prevImage();
+        }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen, selectedProduct, currentImageIndex]);
+  }, [isModalOpen, selectedProduct, currentImageIndex, isFullscreen]);
 
   const toggleDropdown = (productId: number) => {
     setActiveDropdown(activeDropdown === productId ? null : productId);
@@ -187,6 +192,7 @@ const Catalog = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
     setCurrentImageIndex(0);
+    setIsFullscreen(false);
   };
 
   const nextImage = () => {
@@ -206,6 +212,14 @@ const Catalog = () => {
 
   const goToImage = (index: number) => {
     setCurrentImageIndex(index);
+  };
+
+  const openFullscreen = () => {
+    setIsFullscreen(true);
+  };
+
+  const closeFullscreen = () => {
+    setIsFullscreen(false);
   };
 
   const handleModalClick = (event: React.MouseEvent) => {
@@ -273,6 +287,7 @@ const Catalog = () => {
                   currentImageIndex + 1
                 }`}
                 className="modal-image"
+                onClick={openFullscreen}
               />
 
               {selectedProduct.images.length > 1 && (
@@ -365,6 +380,19 @@ const Catalog = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {isFullscreen && selectedProduct && (
+        <div className="fullscreen-overlay" onClick={closeFullscreen}>
+          <button className="fullscreen-close" onClick={closeFullscreen}>
+            ×
+          </button>
+          <img
+            src={selectedProduct.images[currentImageIndex]}
+            alt={`${selectedProduct.name} - Pantalla completa`}
+            className="fullscreen-image"
+          />
         </div>
       )}
     </section>
