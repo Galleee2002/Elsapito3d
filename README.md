@@ -25,6 +25,7 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   position: relative;
+  padding-top: 70px;
 }
 .App::before {
   content: "";
@@ -471,7 +472,7 @@ export default App;
 
 .modal-image {
   width: 100%;
-  height: 400px;
+  height: 600px;
   object-fit: cover;
   border-radius: 15px;
   transition: opacity 0.3s ease;
@@ -643,12 +644,12 @@ export default App;
 .modal-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #fff;
+  color: #ffff;
   margin: 0;
 }
 
 .modal-description {
-  color: #fff;
+  color: #ffff;
   font-size: 1.1rem;
   line-height: 1.6;
   margin: 0;
@@ -675,18 +676,20 @@ export default App;
 
 .detail-label {
   font-weight: 600;
-  color: #2c3e50;
+  color: #ffff;
 }
 
 .detail-value {
   color: #77bb54;
   text-align: right;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .detail-value.price {
   font-size: 1.3rem;
   font-weight: bold;
   color: #77bb54;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .modal-actions {
@@ -1016,13 +1019,12 @@ interface Product {
   name: string;
   description: string;
   images: string[];
-  colors: string[];
   price: string;
   details: {
     materials: string[];
     dimensions: string;
     printTime: string;
-    difficulty: string;
+    promotion: string;
   };
 }
 
@@ -1037,62 +1039,54 @@ const Catalog = () => {
   const products: Product[] = [
     {
       id: 1,
-      name: "Figura de Acción Personalizada",
+      name: "Tarjetero para reja",
       description:
-        "Crea tu propia figura de acción con detalles únicos y acabados profesionales. Perfecta para coleccionistas y entusiastas del modelado 3D.",
+        "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
       images: [
         "/tarjetero.jpg",
-        "/api/placeholder/400/300",
-        "/api/placeholder/400/280",
-        "/api/placeholder/400/320",
+        "/tarjetero1.jpg",
+        "/tarjetero3.jpg",
+        "/tarjetero2.jpg",
       ],
-      colors: ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4"],
-      price: "$25.000",
+      price: "$4000 ",
       details: {
-        materials: ["PLA", "PETG", "Resina"],
-        dimensions: "15cm x 8cm x 5cm",
-        printTime: "4-6 horas",
-        difficulty: "Intermedio",
+        materials: ["PLA+"],
+        dimensions: "8cm x 5cm x 5cm",
+        printTime: "10 - 15 días",
+        promotion: "A partir de tres unidades $3000 c/u",
       },
     },
     {
       id: 2,
-      name: "Miniatura Arquitectónica",
+      name: "Expositor encastrable",
       description:
-        "Modelos a escala de edificios y estructuras con precisión milimétrica. Ideal para arquitectos, diseñadores y maquetistas profesionales.",
+        "Organizá y destacá tus piezas con este práctico estante escalonado, ideal para mostrar figuras, anillos o productos pequeños.",
       images: [
-        "/api/placeholder/300/250",
-        "/api/placeholder/400/290",
-        "/api/placeholder/400/310",
+        "/estante1.jpg",
+        "/estante2.jpg",
+        "/estante3.jpg",
+        "/estante4.jpg",
       ],
-      colors: ["#FECA57", "#FF9FF3", "#54A0FF", "#5F27CD"],
-      price: "$35.000",
+      price: "$10.000",
       details: {
         materials: ["PLA", "ABS"],
         dimensions: "20cm x 15cm x 12cm",
-        printTime: "8-12 horas",
-        difficulty: "Avanzado",
+        printTime: "10-15 días",
+        promotion: "A partir de tres unidades $8500 c/u",
       },
     },
     {
       id: 3,
-      name: "Prototipo Funcional",
+      name: "Calesita giratoria expositora",
       description:
-        "Prototipos para pruebas de concepto y desarrollo de productos. Perfecto para ingenieros y desarrolladores que necesitan validar sus diseños.",
-      images: [
-        "/api/placeholder/300/250",
-        "/api/placeholder/400/300",
-        "/api/placeholder/400/280",
-        "/api/placeholder/400/320",
-        "/api/placeholder/400/290",
-      ],
-      colors: ["#00D2D3", "#FF9F43", "#EE5A24", "#0984E3"],
-      price: "$45.000",
+        "Mostrá tus productos de forma ordenada y vistosa con este exhibidor giratorio impreso en 3D. Cuenta con dos niveles con ganchos para colgar accesorios, bijouterie, llaveros o miniaturas.",
+      images: ["/calesita1.jpg", "/calesita2.jpg"],
+      price: "$13.000",
       details: {
-        materials: ["PETG", "TPU", "Nylon"],
+        materials: ["PLA+"],
         dimensions: "Variable",
-        printTime: "6-10 horas",
-        difficulty: "Profesional",
+        printTime: "10-15 días",
+        promotion: "Calesita tres niveles $15.000",
       },
     },
   ];
@@ -1243,6 +1237,33 @@ const Catalog = () => {
     }
   };
 
+  // Funciones para navegación
+  const scrollToGallery = () => {
+    closeModal();
+    setTimeout(() => {
+      const gallerySection = document.querySelector(".gallery-section");
+      if (gallerySection) {
+        gallerySection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  };
+
+  const scrollToFooter = () => {
+    closeModal();
+    setTimeout(() => {
+      const footerSection = document.querySelector("#contacto");
+      if (footerSection) {
+        footerSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  };
+
   return (
     <section id="catalogo" className="catalog-section">
       <div className="container">
@@ -1364,6 +1385,12 @@ const Catalog = () => {
                   </span>
                 </div>
                 <div className="detail-row">
+                  <span className="detail-label">Promo:</span>
+                  <span className="detail-value">
+                    {selectedProduct.details.promotion}
+                  </span>
+                </div>
+                <div className="detail-row">
                   <span className="detail-label">Materiales:</span>
                   <span className="detail-value">
                     {selectedProduct.details.materials.join(", ")}
@@ -1376,22 +1403,20 @@ const Catalog = () => {
                   </span>
                 </div>
                 <div className="detail-row">
-                  <span className="detail-label">Tiempo de impresión:</span>
+                  <span className="detail-label">Demora:</span>
                   <span className="detail-value">
                     {selectedProduct.details.printTime}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Dificultad:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.difficulty}
                   </span>
                 </div>
               </div>
 
               <div className="modal-actions">
-                <button className="contact-btn">Ver colores disponibles</button>
-                <button className="quote-btn">Solicitar Cotización</button>
+                <button className="contact-btn" onClick={scrollToGallery}>
+                  Ver colores disponibles
+                </button>
+                <button className="quote-btn" onClick={scrollToFooter}>
+                  Solicitar Cotización
+                </button>
               </div>
             </div>
           </div>
@@ -1486,12 +1511,28 @@ export default Catalog;
   font-size: 1.5rem;
 }
 
+.text-showroom {
+  text-align: center;
+  color: white;
+  padding-top: 20px;
+}
+
 .footer-text {
   color: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 1.5rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 0.5rem;
 }
 
 .map-container {
@@ -1742,6 +1783,13 @@ const Footer = () => {
                   title="Ubicación El Sapito 3D"
                 ></iframe>
               </div>
+              <div className="text-showroom">
+                <p>
+                  Retiro presencial en @BunnyClubShowroom Maipú 484 Galeria
+                  Maipú Local 24- Horarios: Lunes a Viernes de 14hs a 19hs y
+                  Sábados de 10hs a 13hs
+                </p>
+              </div>
             </div>
           </Col>
 
@@ -1749,17 +1797,27 @@ const Footer = () => {
             <div className="footer-card">
               <h4 className="footer-title">
                 <i className="bx bxl-instagram"></i>
-                Síguenos
+                Hace tu pedido
               </h4>
-              <p className="footer-text">
-                Mantente al día con nuestros últimos trabajos y novedades
-              </p>
+              <div className="footer-text">
+                <p>¿Cómo comprar?</p>
+                <ol className="footer-list">
+                  <li> 1 - Elegí el producto que te guste del catálogo.</li>
+                  <li>
+                    2 - Seleccioná la cantidad que querés y el color disponible.
+                  </li>
+                  <li>
+                    3 - Una vez elegido, escribinos por mensaje privado en
+                    Instagram para coordinar tu pedido.
+                  </li>
+                </ol>
+              </div>
               <Button
                 className="instagram-footer-button"
                 onClick={handleInstagramClick}
               >
                 <i className="bx bxl-instagram"></i>
-                Seguir en Instagram
+                Solictar cotización
               </Button>
             </div>
           </Col>
@@ -1775,12 +1833,8 @@ const Footer = () => {
                   <h6>
                     <i className="bx bx-truck"></i> Envíos
                   </h6>
-                  <p>
-                    • Envíos a todo el país
-                    <br />
-                    • CABA y GBA: 24-48hs
-                    <br />• Interior: 3-7 días hábiles
-                  </p>
+                  <p>• Envíos a todo el país</p>
+                  <p>• Por Correo Argentino a cargo del comprador</p>
                 </div>
                 <div className="info-item">
                   <h6>
@@ -1790,7 +1844,7 @@ const Footer = () => {
                     • Transferencia bancaria
                     <br />
                     • MercadoPago
-                    <br />• Efectivo (solo CABA)
+                    <br />• Efectivo (solo CABA - BunnyClubShowroom)
                   </p>
                 </div>
                 <div className="info-item">
@@ -1800,8 +1854,8 @@ const Footer = () => {
                   <p>
                     • Cotización gratuita
                     <br />
-                    • Tiempo de producción: 2-5 días
-                    <br />• Confirmación por WhatsApp
+                    • Tiempo de producción: 10-15 días
+                    <br />• Atención posventa via Instagram
                   </p>
                 </div>
               </div>
@@ -2300,12 +2354,15 @@ export default Gallery;
 ## src\components\Header.css
 
 ```
-/* Header.css */
 .custom-navbar {
   background-color: #77bb54 !important;
   padding: 1rem 0;
-  position: relative;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
   min-height: 70px;
+  z-index: 1050;
 }
 
 .pattern-overlay {
@@ -2390,7 +2447,6 @@ export default Gallery;
   font-size: 1.1rem;
 }
 
-/* Navbar toggler personalizado */
 .navbar-toggler {
   border: 2px solid #f1f11e;
   border-radius: 8px;
@@ -2406,7 +2462,6 @@ export default Gallery;
   background-color: rgba(241, 241, 30, 0.1);
 }
 
-/* Estilos para el menu colapsable */
 .search-form-mobile {
   width: 100%;
 }
@@ -2500,6 +2555,7 @@ const Header = () => {
         expand="lg"
         className="custom-navbar row px-3 px-md-4"
         variant="dark"
+        fixed="top"
       >
         <div
           className="container-fluid position-relative"
@@ -2800,8 +2856,26 @@ import "./HeroSection.css";
 import "./animations.css";
 
 const HeroSection = () => {
+  const handleCatalogClick = () => {
+    const element = document.querySelector("#catalogo");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleShippingClick = () => {
+    const element = document.querySelector("#contacto");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleInstagramClick = () => {
+    window.open("https://www.instagram.com/elsapito.3d", "_blank");
+  };
+
   return (
-    <Container fluid className="hero-section">
+    <Container fluid className="hero-section" id="inicio">
       <Container className="position-relative" style={{ zIndex: 2 }}>
         <Row className="justify-content-center align-items-center min-vh-80">
           <Col lg={8} md={10} xs={12} className="text-center">
@@ -2831,6 +2905,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
+                  onClick={handleCatalogClick}
                 >
                   <i className="bx bx-grid-alt"></i>
                   Ver catálogo
@@ -2839,6 +2914,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
+                  onClick={handleShippingClick}
                 >
                   <i className="bx bx-package"></i>
                   Envíos
@@ -2847,6 +2923,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button instagram-button"
+                  onClick={handleInstagramClick}
                 >
                   <i className="bx bxl-instagram"></i>
                   Instagram

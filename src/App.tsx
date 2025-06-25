@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
@@ -8,11 +8,19 @@ import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 
 function App() {
+  const catalogRef = useRef<any>(null);
+
+  const handleProductSelect = (productId: number) => {
+    if (catalogRef.current) {
+      catalogRef.current.openProductModal(productId);
+    }
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header onProductSelect={handleProductSelect} />
       <HeroSection />
-      <Catalog />
+      <Catalog ref={catalogRef} />
       <Gallery />
       <Footer />
     </div>

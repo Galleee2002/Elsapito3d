@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import "./Catalog.css";
 
 interface Product {
@@ -6,7 +13,6 @@ interface Product {
   name: string;
   description: string;
   images: string[];
-
   price: string;
   details: {
     materials: string[];
@@ -16,7 +22,11 @@ interface Product {
   };
 }
 
-const Catalog = () => {
+interface CatalogRef {
+  openProductModal: (productId: number) => void;
+}
+
+const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -32,60 +42,61 @@ const Catalog = () => {
         "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
       images: [
         "/tarjetero.jpg",
-        "/api/placeholder/400/300",
-        "/api/placeholder/400/280",
-        "/api/placeholder/400/320",
+        "/tarjetero1.jpg",
+        "/tarjetero3.jpg",
+        "/tarjetero2.jpg",
       ],
-
       price: "$4000 ",
       details: {
         materials: ["PLA+"],
         dimensions: "8cm x 5cm x 5cm",
         printTime: "10 - 15 días",
-        promotion: "A partir de tres unidades $3000",
+        promotion: "A partir de tres unidades $3000 c/u",
       },
     },
     {
       id: 2,
-      name: "Miniatura Arquitectónica",
+      name: "Expositor encastrable",
       description:
-        "Modelos a escala de edificios y estructuras con precisión milimétrica. Ideal para arquitectos, diseñadores y maquetistas profesionales.",
+        "Organizá y destacá tus piezas con este práctico estante escalonado, ideal para mostrar figuras, anillos o productos pequeños.",
       images: [
-        "/api/placeholder/300/250",
-        "/api/placeholder/400/290",
-        "/api/placeholder/400/310",
+        "/estante1.jpg",
+        "/estante2.jpg",
+        "/estante3.jpg",
+        "/estante4.jpg",
       ],
-
-      price: "$35.000",
+      price: "$10.000",
       details: {
         materials: ["PLA", "ABS"],
         dimensions: "20cm x 15cm x 12cm",
-        printTime: "8-12 horas",
-        promotion: "",
+        printTime: "10-15 días",
+        promotion: "A partir de tres unidades $8500 c/u",
       },
     },
     {
       id: 3,
-      name: "Prototipo Funcional",
+      name: "Calesita giratoria expositora",
       description:
-        "Prototipos para pruebas de concepto y desarrollo de productos. Perfecto para ingenieros y desarrolladores que necesitan validar sus diseños.",
-      images: [
-        "/api/placeholder/300/250",
-        "/api/placeholder/400/300",
-        "/api/placeholder/400/280",
-        "/api/placeholder/400/320",
-        "/api/placeholder/400/290",
-      ],
-
-      price: "$45.000",
+        "Mostrá tus productos de forma ordenada y vistosa con este exhibidor giratorio impreso en 3D. Cuenta con dos niveles con ganchos para colgar accesorios, bijouterie, llaveros o miniaturas.",
+      images: ["/calesita1.jpg", "/calesita2.jpg"],
+      price: "$13.000",
       details: {
         materials: ["PLA+"],
         dimensions: "Variable",
-        printTime: "6-10 horas",
-        promotion: "",
+        printTime: "10-15 días",
+        promotion: "Calesita tres niveles $15.000",
       },
     },
   ];
+
+  useImperativeHandle(ref, () => ({
+    openProductModal: (productId: number) => {
+      const product = products.find((p) => p.id === productId);
+      if (product) {
+        openModal(product);
+      }
+    },
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -231,6 +242,32 @@ const Catalog = () => {
     if (event.target === event.currentTarget) {
       closeModal();
     }
+  };
+
+  const scrollToGallery = () => {
+    closeModal();
+    setTimeout(() => {
+      const gallerySection = document.querySelector(".gallery-section");
+      if (gallerySection) {
+        gallerySection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  };
+
+  const scrollToFooter = () => {
+    closeModal();
+    setTimeout(() => {
+      const footerSection = document.querySelector("#contacto");
+      if (footerSection) {
+        footerSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -380,8 +417,12 @@ const Catalog = () => {
               </div>
 
               <div className="modal-actions">
-                <button className="contact-btn">Ver colores disponibles</button>
-                <button className="quote-btn">Solicitar Cotización</button>
+                <button className="contact-btn" onClick={scrollToGallery}>
+                  Ver colores disponibles
+                </button>
+                <button className="quote-btn" onClick={scrollToFooter}>
+                  Solicitar Cotización
+                </button>
               </div>
             </div>
           </div>
@@ -402,6 +443,6 @@ const Catalog = () => {
       )}
     </section>
   );
-};
+});
 
 export default Catalog;
