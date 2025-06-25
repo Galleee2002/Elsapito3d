@@ -53,6 +53,7 @@ const Header = () => {
         expand="lg"
         className="custom-navbar row px-3 px-md-4"
         variant="dark"
+        fixed="top"
       >
         <div
           className="container-fluid position-relative"

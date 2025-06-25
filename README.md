@@ -93,6 +93,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import Catalog from "./components/Catalog";
+import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 
 function App() {
@@ -101,6 +102,7 @@ function App() {
       <Header />
       <HeroSection />
       <Catalog />
+      <Gallery />
       <Footer />
     </div>
   );
@@ -1006,7 +1008,7 @@ export default App;
 ## src\components\Catalog.tsx
 
 ```
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "./Catalog.css";
 
 interface Product {
@@ -1112,14 +1114,15 @@ const Catalog = () => {
       }
     );
 
-    cardRefs.current.forEach((card) => {
+    const currentCards = cardRefs.current;
+    currentCards.forEach((card) => {
       if (card) {
         observer.observe(card);
       }
     });
 
     return () => {
-      cardRefs.current.forEach((card) => {
+      currentCards.forEach((card) => {
         if (card) {
           observer.unobserve(card);
         }
@@ -1164,6 +1167,28 @@ const Catalog = () => {
     };
   }, [isModalOpen]);
 
+  const nextImage = useCallback(() => {
+    if (
+      selectedProduct &&
+      currentImageIndex < selectedProduct.images.length - 1
+    ) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  }, [selectedProduct, currentImageIndex]);
+
+  const prevImage = useCallback(() => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  }, [currentImageIndex]);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+    setCurrentImageIndex(0);
+    setIsFullscreen(false);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -1183,39 +1208,21 @@ const Catalog = () => {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen, selectedProduct, currentImageIndex, isFullscreen]);
-
-  const toggleDropdown = (productId: number) => {
-    setActiveDropdown(activeDropdown === productId ? null : productId);
-  };
+  }, [
+    isModalOpen,
+    selectedProduct,
+    currentImageIndex,
+    isFullscreen,
+    nextImage,
+    prevImage,
+    closeModal,
+  ]);
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
     setActiveDropdown(null);
     setCurrentImageIndex(0);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-    setCurrentImageIndex(0);
-    setIsFullscreen(false);
-  };
-
-  const nextImage = () => {
-    if (
-      selectedProduct &&
-      currentImageIndex < selectedProduct.images.length - 1
-    ) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
   };
 
   const goToImage = (index: number) => {
@@ -1725,7 +1732,7 @@ const Footer = () => {
               </h4>
               <div className="map-container">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.6547!2d-58.3816!3d-34.6037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM2JzEzLjMiUyA1OMKwMjInNTcuOCJX!5e0!3m2!1ses!2sar!4v1620000000000!5m2!1ses!2sar"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.063314268396!2d-58.37941742341764!3d-34.60256045743858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccacc267f767d%3A0x4f13f152ba765ad!2sMaip%C3%BA%20484%2C%20C1007%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1750878858345!5m2!1ses!2sar"
                   width="100%"
                   height="250"
                   style={{ border: 0, borderRadius: "15px" }}
@@ -1817,6 +1824,476 @@ const Footer = () => {
 };
 
 export default Footer;
+
+```
+
+## src\components\Gallery.css
+
+```
+.gallery-section {
+  min-height: 80vh;
+  padding: 80px 0;
+  background: linear-gradient(
+    135deg,
+    rgba(119, 187, 84, 0.05) 0%,
+    rgba(76, 175, 80, 0.02) 100%
+  );
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+      circle at 30% 40%,
+      rgba(119, 187, 84, 0.08) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(119, 187, 84, 0.08) 2px,
+      transparent 2px
+    );
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.gallery-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.gallery-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.gallery-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.gallery-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-arrow-left {
+  left: 20px;
+}
+
+.gallery-arrow-right {
+  right: 20px;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInScale 0.8s ease-out;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+.gallery-content {
+  padding: 1rem 0;
+  transition: all 0.6s ease;
+}
+
+.gallery-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInUp 0.6s ease-out 0.2s both;
+  color: white;
+}
+
+.gallery-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  animation: slideInUp 0.6s ease-out 0.4s both;
+  color: white;
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 1rem;
+}
+
+.indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.indicator:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.indicator.active {
+  opacity: 1;
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+  .gallery-section {
+    padding: 60px 0;
+    min-height: 70vh;
+  }
+
+  .gallery-container {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+  .gallery-image-wrapper {
+    height: 300px;
+    margin-bottom: 1.5rem;
+  }
+
+  .gallery-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
+
+  .gallery-arrow-left {
+    left: 15px;
+  }
+
+  .gallery-arrow-right {
+    right: 15px;
+  }
+
+  .gallery-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .gallery-description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .indicator {
+    width: 20px;
+    height: 20px;
+  }
+
+  .gallery-indicators {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-section {
+    padding: 40px 0;
+  }
+
+  .gallery-container {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+
+  .gallery-image-wrapper {
+    height: 250px;
+    margin-bottom: 1rem;
+    border-radius: 15px;
+  }
+
+  .gallery-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  .gallery-arrow-left {
+    left: 10px;
+  }
+
+  .gallery-arrow-right {
+    right: 10px;
+  }
+
+  .gallery-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .gallery-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .indicator {
+    width: 18px;
+    height: 18px;
+  }
+
+  .gallery-indicators {
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-image {
+    animation: none;
+    transition: none;
+  }
+
+  .gallery-title,
+  .gallery-description {
+    animation: none;
+  }
+
+  .indicator {
+    transition: none;
+  }
+
+  .gallery-container {
+    transition: none;
+  }
+
+  .gallery-arrow {
+    transition: none;
+  }
+}
+
+```
+
+## src\components\Gallery.tsx
+
+```
+import React, { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import "./Gallery.css";
+
+interface GalleryItem {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  color: string;
+}
+
+const Gallery = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const galleryItems: GalleryItem[] = [
+    {
+      id: 1,
+      image: "/tarjetero.jpg",
+      title: "Trabajos de Precisión",
+      description:
+        "Cada pieza impresa con la máxima calidad y atención al detalle",
+      color: "#77bb54",
+    },
+    {
+      id: 2,
+      image: "/api/placeholder/400/300",
+      title: "Diseños Únicos",
+      description:
+        "Creaciones personalizadas adaptadas a tus necesidades específicas",
+      color: "#4ECDC4",
+    },
+    {
+      id: 3,
+      image: "/api/placeholder/400/280",
+      title: "Materiales Premium",
+      description:
+        "Utilizamos solo los mejores filamentos para garantizar durabilidad",
+      color: "#FF6B6B",
+    },
+    {
+      id: 4,
+      image: "/api/placeholder/400/320",
+      title: "Entregas Rápidas",
+      description:
+        "Tiempos de producción optimizados sin comprometer la calidad",
+      color: "#45B7D1",
+    },
+    {
+      id: 5,
+      image: "/api/placeholder/400/290",
+      title: "Satisfacción Garantizada",
+      description:
+        "Tu conformidad es nuestra prioridad en cada proyecto realizado",
+      color: "#96CEB4",
+    },
+  ];
+
+  const currentItem = galleryItems[currentIndex];
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === galleryItems.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? galleryItems.length - 1 : prevIndex - 1
+    );
+  };
+
+  return (
+    <section className="gallery-section">
+      <Container>
+        <Row className="justify-content-center">
+          <Col lg={8} md={10} xs={12}>
+            <div className="gallery-container">
+              <div className="gallery-image-wrapper">
+                <img
+                  src={currentItem.image}
+                  alt={currentItem.title}
+                  className="gallery-image"
+                  key={currentItem.id}
+                />
+                <div className="gallery-overlay"></div>
+
+                <button
+                  className="gallery-arrow gallery-arrow-left"
+                  onClick={prevSlide}
+                >
+                  ←
+                </button>
+                <button
+                  className="gallery-arrow gallery-arrow-right"
+                  onClick={nextSlide}
+                >
+                  →
+                </button>
+              </div>
+
+              <div
+                className="gallery-content"
+                style={{ color: currentItem.color }}
+              >
+                <h3 className="gallery-title">{currentItem.title}</h3>
+                <p className="gallery-description">{currentItem.description}</p>
+              </div>
+
+              <div className="gallery-indicators">
+                {galleryItems.map((item, index) => (
+                  <button
+                    key={index}
+                    className={`indicator ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                    onClick={() => goToSlide(index)}
+                    style={{ backgroundColor: item.color }}
+                  />
+                ))}
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </section>
+  );
+};
+
+export default Gallery;
 
 ```
 

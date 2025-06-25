@@ -19,7 +19,7 @@ const Footer = () => {
               </h4>
               <div className="map-container">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.6547!2d-58.3816!3d-34.6037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM2JzEzLjMiUyA1OMKwMjInNTcuOCJX!5e0!3m2!1ses!2sar!4v1620000000000!5m2!1ses!2sar"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.063314268396!2d-58.37941742341764!3d-34.60256045743858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccacc267f767d%3A0x4f13f152ba765ad!2sMaip%C3%BA%20484%2C%20C1007%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1750878858345!5m2!1ses!2sar"
                   width="100%"
                   height="250"
                   style={{ border: 0, borderRadius: "15px" }}
@@ -29,6 +29,13 @@ const Footer = () => {
                   title="Ubicación El Sapito 3D"
                 ></iframe>
               </div>
+              <div className="text-showroom">
+                <p>
+                  Retiro presencial en @BunnyClubShowroom Maipú 484 Galeria
+                  Maipú Local 24- Horarios: Lunes a Viernes de 14hs a 19hs y
+                  Sábados de 10hs a 13hs
+                </p>
+              </div>
             </div>
           </Col>
 
@@ -36,17 +43,27 @@ const Footer = () => {
             <div className="footer-card">
               <h4 className="footer-title">
                 <i className="bx bxl-instagram"></i>
-                Síguenos
+                Hace tu pedido
               </h4>
-              <p className="footer-text">
-                Mantente al día con nuestros últimos trabajos y novedades
-              </p>
+              <div className="footer-text">
+                <p>¿Cómo comprar?</p>
+                <ol className="footer-list">
+                  <li> 1 - Elegí el producto que te guste del catálogo.</li>
+                  <li>
+                    2 - Seleccioná la cantidad que querés y el color disponible.
+                  </li>
+                  <li>
+                    3 - Una vez elegido, escribinos por mensaje privado en
+                    Instagram para coordinar tu pedido.
+                  </li>
+                </ol>
+              </div>
               <Button
                 className="instagram-footer-button"
                 onClick={handleInstagramClick}
               >
                 <i className="bx bxl-instagram"></i>
-                Seguir en Instagram
+                Solictar cotización
               </Button>
             </div>
           </Col>
@@ -62,12 +79,8 @@ const Footer = () => {
                   <h6>
                     <i className="bx bx-truck"></i> Envíos
                   </h6>
-                  <p>
-                    • Envíos a todo el país
-                    <br />
-                    • CABA y GBA: 24-48hs
-                    <br />• Interior: 3-7 días hábiles
-                  </p>
+                  <p>• Envíos a todo el país</p>
+                  <p>• Por Correo Argentino a cargo del comprador</p>
                 </div>
                 <div className="info-item">
                   <h6>
@@ -77,7 +90,7 @@ const Footer = () => {
                     • Transferencia bancaria
                     <br />
                     • MercadoPago
-                    <br />• Efectivo (solo CABA)
+                    <br />• Efectivo (solo CABA - BunnyClubShowroom)
                   </p>
                 </div>
                 <div className="info-item">
@@ -87,8 +100,8 @@ const Footer = () => {
                   <p>
                     • Cotización gratuita
                     <br />
-                    • Tiempo de producción: 2-5 días
-                    <br />• Confirmación por WhatsApp
+                    • Tiempo de producción: 10-15 días
+                    <br />• Atención posventa via Instagram
                   </p>
                 </div>
               </div>

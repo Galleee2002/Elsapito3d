@@ -4,8 +4,26 @@ import "./HeroSection.css";
 import "./animations.css";
 
 const HeroSection = () => {
+  const handleCatalogClick = () => {
+    const element = document.querySelector("#catalogo");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleShippingClick = () => {
+    const element = document.querySelector("#contacto");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleInstagramClick = () => {
+    window.open("https://www.instagram.com/elsapito.3d", "_blank");
+  };
+
   return (
-    <Container fluid className="hero-section">
+    <Container fluid className="hero-section" id="inicio">
       <Container className="position-relative" style={{ zIndex: 2 }}>
         <Row className="justify-content-center align-items-center min-vh-80">
           <Col lg={8} md={10} xs={12} className="text-center">
@@ -35,6 +53,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
+                  onClick={handleCatalogClick}
                 >
                   <i className="bx bx-grid-alt"></i>
                   Ver catálogo
@@ -43,6 +62,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
+                  onClick={handleShippingClick}
                 >
                   <i className="bx bx-package"></i>
                   Envíos
@@ -51,6 +71,7 @@ const HeroSection = () => {
                   variant="outline-light"
                   size="lg"
                   className="hero-button instagram-button"
+                  onClick={handleInstagramClick}
                 >
                   <i className="bx bxl-instagram"></i>
                   Instagram

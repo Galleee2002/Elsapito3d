@@ -6,13 +6,13 @@ interface Product {
   name: string;
   description: string;
   images: string[];
-  colors: string[];
+
   price: string;
   details: {
     materials: string[];
     dimensions: string;
     printTime: string;
-    difficulty: string;
+    promotion: string;
   };
 }
 
@@ -27,22 +27,22 @@ const Catalog = () => {
   const products: Product[] = [
     {
       id: 1,
-      name: "Figura de Acción Personalizada",
+      name: "Tarjetero para reja",
       description:
-        "Crea tu propia figura de acción con detalles únicos y acabados profesionales. Perfecta para coleccionistas y entusiastas del modelado 3D.",
+        "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
       images: [
         "/tarjetero.jpg",
         "/api/placeholder/400/300",
         "/api/placeholder/400/280",
         "/api/placeholder/400/320",
       ],
-      colors: ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4"],
-      price: "$25.000",
+
+      price: "$4000 ",
       details: {
-        materials: ["PLA", "PETG", "Resina"],
-        dimensions: "15cm x 8cm x 5cm",
-        printTime: "4-6 horas",
-        difficulty: "Intermedio",
+        materials: ["PLA+"],
+        dimensions: "8cm x 5cm x 5cm",
+        printTime: "10 - 15 días",
+        promotion: "A partir de tres unidades $3000",
       },
     },
     {
@@ -55,13 +55,13 @@ const Catalog = () => {
         "/api/placeholder/400/290",
         "/api/placeholder/400/310",
       ],
-      colors: ["#FECA57", "#FF9FF3", "#54A0FF", "#5F27CD"],
+
       price: "$35.000",
       details: {
         materials: ["PLA", "ABS"],
         dimensions: "20cm x 15cm x 12cm",
         printTime: "8-12 horas",
-        difficulty: "Avanzado",
+        promotion: "",
       },
     },
     {
@@ -76,13 +76,13 @@ const Catalog = () => {
         "/api/placeholder/400/320",
         "/api/placeholder/400/290",
       ],
-      colors: ["#00D2D3", "#FF9F43", "#EE5A24", "#0984E3"],
+
       price: "$45.000",
       details: {
-        materials: ["PETG", "TPU", "Nylon"],
+        materials: ["PLA+"],
         dimensions: "Variable",
         printTime: "6-10 horas",
-        difficulty: "Profesional",
+        promotion: "",
       },
     },
   ];
@@ -354,6 +354,12 @@ const Catalog = () => {
                   </span>
                 </div>
                 <div className="detail-row">
+                  <span className="detail-label">Promo:</span>
+                  <span className="detail-value">
+                    {selectedProduct.details.promotion}
+                  </span>
+                </div>
+                <div className="detail-row">
                   <span className="detail-label">Materiales:</span>
                   <span className="detail-value">
                     {selectedProduct.details.materials.join(", ")}
@@ -366,15 +372,9 @@ const Catalog = () => {
                   </span>
                 </div>
                 <div className="detail-row">
-                  <span className="detail-label">Tiempo de impresión:</span>
+                  <span className="detail-label">Demora:</span>
                   <span className="detail-value">
                     {selectedProduct.details.printTime}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Dificultad:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.difficulty}
                   </span>
                 </div>
               </div>

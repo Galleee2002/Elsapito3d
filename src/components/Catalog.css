@@ -453,12 +453,12 @@
 .modal-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #fff;
+  color: #ffff;
   margin: 0;
 }
 
 .modal-description {
-  color: #fff;
+  color: #ffff;
   font-size: 1.1rem;
   line-height: 1.6;
   margin: 0;
@@ -485,18 +485,20 @@
 
 .detail-label {
   font-weight: 600;
-  color: #2c3e50;
+  color: #ffff;
 }
 
 .detail-value {
   color: #77bb54;
   text-align: right;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .detail-value.price {
   font-size: 1.3rem;
   font-weight: bold;
   color: #77bb54;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .modal-actions {
