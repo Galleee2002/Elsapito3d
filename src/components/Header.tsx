@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
 import "./Header.css";
 
@@ -18,16 +18,19 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const products: Product[] = [
-    { id: 1, name: "Tarjetero para reja", section: "catalogo" },
-    { id: 2, name: "Expositor encastrable", section: "catalogo" },
-    { id: 3, name: "Calesita giratoria expositora", section: "catalogo" },
-    { id: 4, name: "Trabajos de Precisión", section: "gallery" },
-    { id: 5, name: "Diseños Únicos", section: "gallery" },
-    { id: 6, name: "Materiales Premium", section: "gallery" },
-    { id: 7, name: "Entregas Rápidas", section: "gallery" },
-    { id: 8, name: "Satisfacción Garantizada", section: "gallery" },
-  ];
+  const products: Product[] = useMemo(
+    () => [
+      { id: 1, name: "Tarjetero para reja", section: "catalogo" },
+      { id: 2, name: "Expositor encastrable", section: "catalogo" },
+      { id: 3, name: "Calesita giratoria expositora", section: "catalogo" },
+      { id: 4, name: "Trabajos de Precisión", section: "gallery" },
+      { id: 5, name: "Diseños Únicos", section: "gallery" },
+      { id: 6, name: "Materiales Premium", section: "gallery" },
+      { id: 7, name: "Entregas Rápidas", section: "gallery" },
+      { id: 8, name: "Satisfacción Garantizada", section: "gallery" },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (searchTerm.trim()) {
@@ -40,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
       setFilteredProducts([]);
       setShowDropdown(false);
     }
-  }, [searchTerm]);
+  }, [searchTerm, products]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
