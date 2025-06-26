@@ -17,31 +17,28 @@ const Gallery = () => {
     {
       id: 1,
       image: "/tarjetero.jpg",
-      title: "Trabajos de Precisión",
-      description:
-        "Cada pieza impresa con la máxima calidad y atención al detalle",
+      title: "Colores disponibles",
+      description: "Verde",
       color: "#77bb54",
     },
     {
       id: 2,
       image: "/api/placeholder/400/300",
-      title: "Diseños Únicos",
-      description:
-        "Creaciones personalizadas adaptadas a tus necesidades específicas",
+      title: "Colores disponibles",
+      description: "Azul",
       color: "#4ECDC4",
     },
     {
       id: 3,
       image: "/api/placeholder/400/280",
-      title: "Materiales Premium",
-      description:
-        "Utilizamos solo los mejores filamentos para garantizar durabilidad",
+      title: "Colores disponibles",
+      description: "Rojo",
       color: "#FF6B6B",
     },
     {
       id: 4,
       image: "/api/placeholder/400/320",
-      title: "Entregas Rápidas",
+      title: "Colores disponibles",
       description:
         "Tiempos de producción optimizados sin comprometer la calidad",
       color: "#45B7D1",
@@ -49,7 +46,7 @@ const Gallery = () => {
     {
       id: 5,
       image: "/api/placeholder/400/290",
-      title: "Satisfacción Garantizada",
+      title: "Colores disponibles",
       description:
         "Tu conformidad es nuestra prioridad en cada proyecto realizado",
       color: "#96CEB4",
