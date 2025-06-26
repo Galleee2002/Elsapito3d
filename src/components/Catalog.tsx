@@ -33,137 +33,27 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Tarjetero para reja",
-      description:
-        "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
-      images: [
-        "/tarjetero.jpg",
-        "/tarjetero1.jpg",
-        "/tarjetero3.jpg",
-        "/tarjetero2.jpg",
-      ],
-      price: "$4000 ",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "8cm x 5cm x 5cm",
-        printTime: "10 - 15 días",
-        promotion: "A partir de tres unidades $3000 c/u",
-      },
-    },
-    {
-      id: 2,
-      name: "Expositor encastrable",
-      description:
-        "Organizá y destacá tus piezas con este práctico estante escalonado, ideal para mostrar figuras, anillos o productos pequeños.",
-      images: [
-        "/estante1.jpg",
-        "/estante2.jpg",
-        "/estante3.jpg",
-        "/estante4.jpg",
-      ],
-      price: "$10.000",
-      details: {
-        materials: ["PLA", "ABS"],
-        dimensions: "20cm x 15cm x 12cm",
-        printTime: "10-15 días",
-        promotion: "A partir de tres unidades $8500 c/u",
-      },
-    },
-    {
-      id: 3,
-      name: "Calesita giratoria expositora",
-      description:
-        "Mostrá tus productos de forma ordenada y vistosa con este exhibidor giratorio impreso en 3D. Cuenta con dos niveles con ganchos para colgar accesorios, bijouterie, llaveros o miniaturas.",
-      images: ["/calesita1.jpg", "/calesita2.jpg"],
-      price: " $13.000 ",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "Variable",
-        printTime: "10-15 días",
-        promotion: "Calesita tres niveles $15.000",
-      },
-    },
-    {
-      id: 4,
-      name: "Lapicero expositor",
-      description:
-        "Soporte organizador semicircular para elementos de escritorio o modelado. Con 21 orificios distribuidos en tres niveles, ideal para guardar lápices, pinceles, herramientas de modelado o repujado. Diseño compacto, fabricado en material resistente y fácil de limpiar.",
-      images: ["/lapicero.jpg", "/lapicero1.jpg"],
-      price: "$6.500",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "12cm x 8cm x 15cm",
-        printTime: "10-15 días",
-        promotion: "A partir de tres unidades $5000 c/u",
-      },
-    },
-    {
-      id: 5,
-      name: "Expositor encastrable para cuadernos / libros",
-      description:
-        "Expositor organizador modular.Su diseño con ranuras paralelas permite mantener las piezas ordenadas y visibles, facilitando su exhibición o uso diario.",
-      images: [
-        "/expositor.jpg",
-        "/expositor1.jpg",
-        "/expositor2.jpg",
-        "/expositor3.jpg",
-        "/expositor4.jpg",
-      ],
-      price: "$7.500",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "25cm x 15cm x 8cm",
-        printTime: "10-15 días",
-        promotion: "A partir de tres unidades $6000 c/u",
-      },
-    },
-    {
-      id: 6,
-      name: "Gancho para reja / Blistero",
-      description:
-        "Gancho blistero con medidas de 3cm, 6cm y 9cm de largo. Aclarar cuando se hace el pedido medidas de los cuadraditos y grosor de los alambres de tu reja",
-      images: ["/gancho1.jpg", "/gancho2.jpg"],
-      price: "5u x $3000",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "14cm x 14cm x 16cm",
-        printTime: "10-15 días",
-        promotion: "-",
-      },
-    },
-    {
-      id: 7,
-      name: "Lámpara de mesa LED personalizable",
-      description:
-        "Iluminación LED con base impresa en 3D y pantalla intercambiable. Incluye regulador de intensidad y puerto USB.",
-      images: ["/lampara1.jpg", "/lampara2.jpg", "/lampara3.jpg"],
-      price: "$15.500",
-      details: {
-        materials: ["PLA+", "PETG"],
-        dimensions: "20cm x 20cm x 35cm",
-        printTime: "15-20 días",
-        promotion: "Con pantalla extra $18.000",
-      },
-    },
-    {
-      id: 8,
-      name: "Dispensador de bolsas para mascotas",
-      description:
-        "Práctico dispensador que se engancha a la correa, mantiene las bolsas secas y siempre a mano durante los paseos.",
-      images: ["/dispensador1.jpg", "/dispensador2.jpg"],
-      price: "$3.800",
-      details: {
-        materials: ["ABS", "PETG"],
-        dimensions: "8cm x 6cm x 4cm",
-        printTime: "5-10 días",
-        promotion: "Pack de dos colores $6.500",
-      },
-    },
-  ];
+  const loadProducts = useCallback(async () => {
+    try {
+      const response = await fetch('products.json');
+      
+      if (!response.ok) {
+        throw new Error(`Error al cargar productos: ${response.status}`);
+      }
+      
+      const data: Product[] = await response.json();
+      setProducts(data)
+    } catch (err) {
+      console.error('Error loading products:', err);
+    } finally {
+    }
+  }, []);
+
+  useEffect(()=>{
+    loadProducts()
+  },[])
 
   useImperativeHandle(ref, () => ({
     openProductModal: (productId: number) => {
