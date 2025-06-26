@@ -123,16 +123,16 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
     },
     {
       id: 6,
-      name: "Maceta autorregante hexagonal",
+      name: "Gancho para reja / Blistero",
       description:
-        "Diseño geométrico moderno con sistema de auto-riego integrado, perfecta para plantas suculentas y hierbas aromáticas.",
-      images: ["/maceta1.jpg", "/maceta2.jpg"],
-      price: "$7.200",
+        "Gancho blistero con medidas de 3cm, 6cm y 9cm de largo. Aclarar cuando se hace el pedido medidas de los cuadraditos y grosor de los alambres de tu reja",
+      images: ["/gancho1.jpg", "/gancho2.jpg"],
+      price: "5u x $3000",
       details: {
         materials: ["PLA+"],
         dimensions: "14cm x 14cm x 16cm",
         printTime: "10-15 días",
-        promotion: "Set de tres macetas $18.000",
+        promotion: "-",
       },
     },
     {
