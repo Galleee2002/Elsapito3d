@@ -35,25 +35,25 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
 
-  const loadProducts = useCallback(async () => {
-    try {
-      const response = await fetch('products.json');
-      
-      if (!response.ok) {
-        throw new Error(`Error al cargar productos: ${response.status}`);
-      }
-      
-      const data: Product[] = await response.json();
-      setProducts(data)
-    } catch (err) {
-      console.error('Error loading products:', err);
-    } finally {
-    }
-  }, []);
 
-  useEffect(()=>{
-    loadProducts()
-  },[])
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch('/products.json');
+        
+        if (!response.ok) {
+          throw new Error(`Error al cargar productos: ${response.status}`);
+        }
+        
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (err) {
+        console.error('Error loading products:', err);
+      }
+    };
+  
+    loadProducts();
+  }, []);
 
   useImperativeHandle(ref, () => ({
     openProductModal: (productId: number) => {
