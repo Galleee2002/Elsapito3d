@@ -14,14 +14,11 @@ body {
 
 .App {
   min-height: 100vh;
-  background: url("/public/background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background: url("/public/background.jpg") center/cover fixed no-repeat;
   position: relative;
   padding-top: 70px;
 }
+
 .App::before {
   content: "";
   position: absolute;
@@ -49,16 +46,6 @@ body {
 
 @media (max-width: 768px) {
   .App {
-    background: url("/public/background.jpg");
-    background-size: cover;
-    background-position: center;
     background-attachment: scroll;
-    background-repeat: no-repeat;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
   }
 }

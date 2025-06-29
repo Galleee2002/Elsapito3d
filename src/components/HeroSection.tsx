@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./HeroSection.css";
 import "./animations.css";
 
 const HeroSection = () => {
-  const handleCatalogClick = () => {
-    const element = document.querySelector("#catalogo");
+  const scrollToSection = useCallback((selector: string) => {
+    const element = document.querySelector(selector);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const handleShippingClick = () => {
-    const element = document.querySelector("#contacto");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleInstagramClick = () => {
+  const handleCatalogClick = useCallback(() => scrollToSection("#catalogo"), [scrollToSection]);
+  const handleShippingClick = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
+  
+  const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
-  };
+  }, []);
 
   return (
     <Container fluid className="hero-section" id="inicio">
@@ -55,7 +51,7 @@ const HeroSection = () => {
                   className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
                   onClick={handleCatalogClick}
                 >
-                  <i className="bx bx-grid-alt"></i>
+                  <i className="bx bx-grid-alt" />
                   Ver catálogo
                 </Button>
                 <Button
@@ -64,7 +60,7 @@ const HeroSection = () => {
                   className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
                   onClick={handleShippingClick}
                 >
-                  <i className="bx bx-package"></i>
+                  <i className="bx bx-package" />
                   Envíos
                 </Button>
                 <Button
@@ -73,7 +69,7 @@ const HeroSection = () => {
                   className="hero-button instagram-button"
                   onClick={handleInstagramClick}
                 >
-                  <i className="bx bxl-instagram"></i>
+                  <i className="bx bxl-instagram" />
                   Instagram
                 </Button>
               </div>

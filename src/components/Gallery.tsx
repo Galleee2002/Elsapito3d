@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Gallery.css";
 
@@ -13,7 +13,7 @@ interface GalleryItem {
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const galleryItems: GalleryItem[] = [
+  const galleryItems: GalleryItem[] = useMemo(() => [
     {
       id: 1,
       image: "/tarjetero.jpg",
@@ -39,37 +39,46 @@ const Gallery = () => {
       id: 4,
       image: "/api/placeholder/400/320",
       title: "Colores disponibles",
-      description:
-        "Tiempos de producción optimizados sin comprometer la calidad",
+      description: "Tiempos de producción optimizados sin comprometer la calidad",
       color: "#45B7D1",
     },
     {
       id: 5,
       image: "/api/placeholder/400/290",
       title: "Colores disponibles",
-      description:
-        "Tu conformidad es nuestra prioridad en cada proyecto realizado",
+      description: "Tu conformidad es nuestra prioridad en cada proyecto realizado",
       color: "#96CEB4",
     },
-  ];
+  ], []);
 
   const currentItem = galleryItems[currentIndex];
 
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
-  };
+  }, []);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === galleryItems.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [galleryItems.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? galleryItems.length - 1 : prevIndex - 1
     );
-  };
+  }, [galleryItems.length]);
+
+  const indicators = useMemo(() => 
+    galleryItems.map((item, index) => (
+      <button
+        key={index}
+        className={`indicator ${index === currentIndex ? "active" : ""}`}
+        onClick={() => goToSlide(index)}
+        style={{ backgroundColor: item.color }}
+      />
+    )), [galleryItems, currentIndex, goToSlide]
+  );
 
   return (
     <section className="gallery-section">
@@ -83,6 +92,7 @@ const Gallery = () => {
                   alt={currentItem.title}
                   className="gallery-image"
                   key={currentItem.id}
+                  loading="lazy"
                 />
                 <div className="gallery-overlay"></div>
 
@@ -109,16 +119,7 @@ const Gallery = () => {
               </div>
 
               <div className="gallery-indicators">
-                {galleryItems.map((item, index) => (
-                  <button
-                    key={index}
-                    className={`indicator ${
-                      index === currentIndex ? "active" : ""
-                    }`}
-                    onClick={() => goToSlide(index)}
-                    style={{ backgroundColor: item.color }}
-                  />
-                ))}
+                {indicators}
               </div>
             </div>
           </Col>

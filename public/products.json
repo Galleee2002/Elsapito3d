@@ -95,28 +95,28 @@
     },
     {
       "id": 7,
-      "name": "Lámpara de mesa LED personalizable",
-      "description": "Iluminación LED con base impresa en 3D y pantalla intercambiable. Incluye regulador de intensidad y puerto USB.",
-      "images": ["/lampara1.jpg", "/lampara2.jpg", "/lampara3.jpg"],
-      "price": "$15.500",
+      "name": "",
+      "description": "",
+      "images": [""],
+      "price": "",
       "details": {
-        "materials": ["PLA+", "PETG"],
+        "materials": ["PLA+"],
         "dimensions": "20cm x 20cm x 35cm",
         "printTime": "15-20 días",
-        "promotion": "Con pantalla extra $18.000"
+        "promotion": ""
       }
     },
     {
       "id": 8,
-      "name": "Dispensador de bolsas para mascotas",
-      "description": "Práctico dispensador que se engancha a la correa, mantiene las bolsas secas y siempre a mano durante los paseos.",
-      "images": ["/dispensador1.jpg", "/dispensador2.jpg"],
-      "price": "$3.800",
+      "name": "",
+      "description": "",
+      "images": [""],
+      "price": "$",
       "details": {
-        "materials": ["ABS", "PETG"],
+        "materials": ["PLA+"],
         "dimensions": "8cm x 6cm x 4cm",
         "printTime": "5-10 días",
-        "promotion": "Pack de dos colores $6.500"
+        "promotion": ""
       }
     }
   ]

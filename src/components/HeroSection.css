@@ -9,20 +9,9 @@
 
 .pattern-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(
-      circle at 25% 25%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 75% 75%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    );
+  inset: 0;
+  background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
   background-size: 50px 50px;
   z-index: 1;
 }
@@ -55,21 +44,21 @@
 }
 
 .logo-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: bold;
   letter-spacing: 2px;
   margin-bottom: -5px;
 }
 
 .logo-subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 300;
   letter-spacing: 4px;
   opacity: 0.9;
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 6vw, 3rem);
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
@@ -77,7 +66,7 @@
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -126,43 +115,19 @@
 }
 
 .instagram-button:hover {
-  background: linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   border-color: #e1306c;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-
-  .logo-title {
-    font-size: 2rem;
-  }
-
   .logo-container {
     margin-top: 2rem !important;
     margin-bottom: 0rem !important;
   }
 
-  .logo-circle {
+  .logo-image {
     width: 200px;
     height: 200px;
-  }
-
-  .logo-image {
-    width: 180px;
-    height: 180px;
   }
 
   .content-container {

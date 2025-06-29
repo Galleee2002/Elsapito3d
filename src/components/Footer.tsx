@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./Footer.css";
 
 const Footer = () => {
-  const handleInstagramClick = () => {
+  const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
-  };
+  }, []);
 
   return (
     <footer id="contacto" className="footer-section">
@@ -14,7 +14,7 @@ const Footer = () => {
           <Col lg={4} md={12} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bx-map"></i>
+                <i className="bx bx-map" />
                 Nuestra Ubicación
               </h4>
               <div className="map-container">
@@ -27,7 +27,7 @@ const Footer = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Ubicación El Sapito 3D"
-                ></iframe>
+                />
               </div>
               <div className="text-showroom">
                 <p>
@@ -42,7 +42,7 @@ const Footer = () => {
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bxl-instagram"></i>
+                <i className="bxl-instagram" />
                 Hace tu pedido
               </h4>
               <div className="footer-text">
@@ -62,7 +62,7 @@ const Footer = () => {
                 className="instagram-footer-button"
                 onClick={handleInstagramClick}
               >
-                <i className="bx bxl-instagram"></i>
+                <i className="bx bxl-instagram" />
                 Solictar cotización
               </Button>
             </div>
@@ -71,20 +71,20 @@ const Footer = () => {
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bx-info-circle"></i>
+                <i className="bx bx-info-circle" />
                 Información de Compra
               </h4>
               <div className="info-section">
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-truck"></i> Envíos
+                    <i className="bx bx-truck" /> Envíos
                   </h6>
                   <p>• Envíos a todo el país</p>
                   <p>• Por Correo Argentino a cargo del comprador</p>
                 </div>
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-credit-card"></i> Formas de Pago
+                    <i className="bx bx-credit-card" /> Formas de Pago
                   </h6>
                   <p>
                     • Transferencia bancaria
@@ -95,7 +95,7 @@ const Footer = () => {
                 </div>
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-time"></i> Proceso
+                    <i className="bx bx-time" /> Proceso
                   </h6>
                   <p>
                     • Cotización gratuita

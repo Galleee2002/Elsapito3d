@@ -1,6 +1,6 @@
 # Código del Proyecto
 
-## src\App.css
+## src/App.css
 
 ```
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap");
@@ -70,7 +70,7 @@ body {
 
 ```
 
-## src\App.test.tsx
+## src/App.test.tsx
 
 ```
 import React from 'react';
@@ -85,10 +85,10 @@ test('renders learn react link', () => {
 
 ```
 
-## src\App.tsx
+## src/App.tsx
 
 ```
-import React from "react";
+import React, { useRef } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
@@ -98,11 +98,19 @@ import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 
 function App() {
+  const catalogRef = useRef<any>(null);
+
+  const handleProductSelect = (productId: number) => {
+    if (catalogRef.current) {
+      catalogRef.current.openProductModal(productId);
+    }
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header onProductSelect={handleProductSelect} />
       <HeroSection />
-      <Catalog />
+      <Catalog ref={catalogRef} />
       <Gallery />
       <Footer />
     </div>
@@ -113,80 +121,7 @@ export default App;
 
 ```
 
-## src\components\animations.css
-
-```
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-logo {
-  animation: fadeInScale 1.2s ease-out 0.6s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-title {
-  animation: fadeInUp 1.2s ease-out 0.7s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-subtitle {
-  animation: fadeInUp 1.2s ease-out 0.7s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-buttons {
-  animation: fadeInScale 1.2s ease-out 0.8s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-logo,
-  .animate-title,
-  .animate-subtitle,
-  .animate-buttons {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-
-```
-
-## src\components\Catalog.css
+## src/components/Catalog.css
 
 ```
 .catalog-section {
@@ -236,7 +171,7 @@ export default App;
   font-size: 3rem;
   font-weight: bold;
   color: #77bb54;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   margin-bottom: 1rem;
   position: relative;
   z-index: 2;
@@ -244,7 +179,7 @@ export default App;
 
 .catalog-subtitle {
   font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: #000000b3;
   margin-bottom: 2rem;
   position: relative;
   z-index: 2;
@@ -257,8 +192,6 @@ export default App;
 }
 
 .product-card-wrapper {
-  opacity: 0;
-  transform: translateX(-100px);
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -272,7 +205,7 @@ export default App;
   border-radius: 20px;
   overflow: visible;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(119, 187, 84, 0.4);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -287,7 +220,7 @@ export default App;
 .product-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(119, 187, 84, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -337,7 +270,7 @@ export default App;
 
 .product-body {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(119, 187, 84, 0.4);
   backdrop-filter: blur(10px);
   flex: 1;
   display: flex;
@@ -347,14 +280,14 @@ export default App;
 .product-title {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #2c3e50;
+  color: #ffff;
   margin-bottom: 0.8rem;
   line-height: 1.3;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .product-description {
-  color: #34495e;
+  color: #ffff;
   font-size: 0.95rem;
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -373,8 +306,7 @@ export default App;
 .product-price {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #2c3e50;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  color: #000000b3;
 }
 
 .modal-overlay {
@@ -403,11 +335,7 @@ export default App;
 }
 
 .modal-content {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
+  background: rgba(119, 187, 84, 0.6);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
@@ -444,7 +372,7 @@ export default App;
   background: none;
   border: none;
   font-size: 2rem;
-  color: #666;
+  color: #9b9a9a;
   cursor: pointer;
   width: 40px;
   height: 40px;
@@ -656,7 +584,7 @@ export default App;
 }
 
 .modal-details {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(119, 187, 84, 0.6);
   border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -680,16 +608,14 @@ export default App;
 }
 
 .detail-value {
-  color: #77bb54;
+  color: black;
   text-align: right;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .detail-value.price {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #77bb54;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  color: black;
 }
 
 .modal-actions {
@@ -723,7 +649,7 @@ export default App;
 
 .quote-btn {
   background: rgba(255, 255, 255, 0.8);
-  color: #2c3e50;
+  color: black;
   border: 2px solid #77bb54;
 }
 
@@ -1008,10 +934,17 @@ export default App;
 
 ```
 
-## src\components\Catalog.tsx
+## src/components/Catalog.tsx
 
 ```
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import "./Catalog.css";
 
 interface Product {
@@ -1028,68 +961,47 @@ interface Product {
   };
 }
 
-const Catalog = () => {
+interface CatalogRef {
+  openProductModal: (productId: number) => void;
+}
+
+const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Tarjetero para reja",
-      description:
-        "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
-      images: [
-        "/tarjetero.jpg",
-        "/tarjetero1.jpg",
-        "/tarjetero3.jpg",
-        "/tarjetero2.jpg",
-      ],
-      price: "$4000 ",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "8cm x 5cm x 5cm",
-        printTime: "10 - 15 días",
-        promotion: "A partir de tres unidades $3000 c/u",
-      },
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch('/products.json');
+        
+        if (!response.ok) {
+          throw new Error(`Error al cargar productos: ${response.status}`);
+        }
+        
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (err) {
+        console.error('Error loading products:', err);
+      }
+    };
+  
+    loadProducts();
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    openProductModal: (productId: number) => {
+      const product = products.find((p) => p.id === productId);
+      if (product) {
+        openModal(product);
+      }
     },
-    {
-      id: 2,
-      name: "Expositor encastrable",
-      description:
-        "Organizá y destacá tus piezas con este práctico estante escalonado, ideal para mostrar figuras, anillos o productos pequeños.",
-      images: [
-        "/estante1.jpg",
-        "/estante2.jpg",
-        "/estante3.jpg",
-        "/estante4.jpg",
-      ],
-      price: "$10.000",
-      details: {
-        materials: ["PLA", "ABS"],
-        dimensions: "20cm x 15cm x 12cm",
-        printTime: "10-15 días",
-        promotion: "A partir de tres unidades $8500 c/u",
-      },
-    },
-    {
-      id: 3,
-      name: "Calesita giratoria expositora",
-      description:
-        "Mostrá tus productos de forma ordenada y vistosa con este exhibidor giratorio impreso en 3D. Cuenta con dos niveles con ganchos para colgar accesorios, bijouterie, llaveros o miniaturas.",
-      images: ["/calesita1.jpg", "/calesita2.jpg"],
-      price: "$13.000",
-      details: {
-        materials: ["PLA+"],
-        dimensions: "Variable",
-        printTime: "10-15 días",
-        promotion: "Calesita tres niveles $15.000",
-      },
-    },
-  ];
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1237,7 +1149,6 @@ const Catalog = () => {
     }
   };
 
-  // Funciones para navegación
   const scrollToGallery = () => {
     closeModal();
     setTimeout(() => {
@@ -1437,13 +1348,13 @@ const Catalog = () => {
       )}
     </section>
   );
-};
+});
 
 export default Catalog;
 
 ```
 
-## src\components\Footer.css
+## src/components/Footer.css
 
 ```
 .footer-section {
@@ -1749,7 +1660,7 @@ export default Catalog;
 
 ```
 
-## src\components\Footer.tsx
+## src/components/Footer.tsx
 
 ```
 import React from "react";
@@ -1881,7 +1792,7 @@ export default Footer;
 
 ```
 
-## src\components\Gallery.css
+## src/components/Gallery.css
 
 ```
 .gallery-section {
@@ -1919,7 +1830,7 @@ export default Footer;
 }
 
 .gallery-container {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(119, 187, 84, 0.4);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 25px;
@@ -1934,7 +1845,7 @@ export default Footer;
 .gallery-container:hover {
   transform: translateY(-5px);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(119, 187, 84, 0.5);
 }
 
 .gallery-image-wrapper {
@@ -2022,7 +1933,7 @@ export default Footer;
 }
 
 .gallery-title {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -2031,7 +1942,7 @@ export default Footer;
 }
 
 .gallery-description {
-  font-size: 1.1rem;
+  font-size: 2rem;
   line-height: 1.6;
   margin-bottom: 2rem;
   opacity: 0.9;
@@ -2211,7 +2122,7 @@ export default Footer;
 
 ```
 
-## src\components\Gallery.tsx
+## src/components/Gallery.tsx
 
 ```
 import React, { useState } from "react";
@@ -2233,31 +2144,28 @@ const Gallery = () => {
     {
       id: 1,
       image: "/tarjetero.jpg",
-      title: "Trabajos de Precisión",
-      description:
-        "Cada pieza impresa con la máxima calidad y atención al detalle",
+      title: "Colores disponibles",
+      description: "Verde",
       color: "#77bb54",
     },
     {
       id: 2,
       image: "/api/placeholder/400/300",
-      title: "Diseños Únicos",
-      description:
-        "Creaciones personalizadas adaptadas a tus necesidades específicas",
+      title: "Colores disponibles",
+      description: "Azul",
       color: "#4ECDC4",
     },
     {
       id: 3,
       image: "/api/placeholder/400/280",
-      title: "Materiales Premium",
-      description:
-        "Utilizamos solo los mejores filamentos para garantizar durabilidad",
+      title: "Colores disponibles",
+      description: "Rojo",
       color: "#FF6B6B",
     },
     {
       id: 4,
       image: "/api/placeholder/400/320",
-      title: "Entregas Rápidas",
+      title: "Colores disponibles",
       description:
         "Tiempos de producción optimizados sin comprometer la calidad",
       color: "#45B7D1",
@@ -2265,7 +2173,7 @@ const Gallery = () => {
     {
       id: 5,
       image: "/api/placeholder/400/290",
-      title: "Satisfacción Garantizada",
+      title: "Colores disponibles",
       description:
         "Tu conformidad es nuestra prioridad en cada proyecto realizado",
       color: "#96CEB4",
@@ -2351,7 +2259,7 @@ export default Gallery;
 
 ```
 
-## src\components\Header.css
+## src/components/Header.css
 
 ```
 .custom-navbar {
@@ -2447,6 +2355,40 @@ export default Gallery;
   font-size: 1.1rem;
 }
 
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  margin-top: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.search-dropdown-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.search-dropdown-item:hover {
+  background: rgba(119, 187, 84, 0.1);
+  color: #77bb54;
+}
+
+.search-dropdown-item:last-child {
+  border-bottom: none;
+}
+
 .navbar-toggler {
   border: 2px solid #f1f11e;
   border-radius: 8px;
@@ -2497,36 +2439,107 @@ export default Gallery;
 
 ```
 
-## src\components\Header.tsx
+## src/components/Header.tsx
 
 ```
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
 import "./Header.css";
 
-const Header = () => {
+interface Product {
+  id: number;
+  name: string;
+  section: string;
+}
+
+interface HeaderProps {
+  onProductSelect?: (productId: number) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const products: Product[] = useMemo(
+    () => [
+      { id: 1, name: "Tarjetero para reja", section: "catalogo" },
+      { id: 2, name: "Expositor encastrable", section: "catalogo" },
+      { id: 3, name: "Calesita giratoria expositora", section: "catalogo" },
+      { id: 4, name: "Trabajos de Precisión", section: "gallery" },
+      { id: 5, name: "Diseños Únicos", section: "gallery" },
+      { id: 6, name: "Materiales Premium", section: "gallery" },
+      { id: 7, name: "Entregas Rápidas", section: "gallery" },
+      { id: 8, name: "Satisfacción Garantizada", section: "gallery" },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      const filtered = products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+      setShowDropdown(filtered.length > 0);
+    } else {
+      setFilteredProducts([]);
+      setShowDropdown(false);
+    }
+  }, [searchTerm, products]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
       let targetSection = "";
 
-      if (searchLower.includes("inicio") || searchLower.includes("home")) {
-        targetSection = "#inicio";
-      } else if (
-        searchLower.includes("catalogo") ||
-        searchLower.includes("catálogo") ||
-        searchLower.includes("productos")
-      ) {
-        targetSection = "#catalogo";
-      } else if (
-        searchLower.includes("contacto") ||
-        searchLower.includes("contact")
-      ) {
-        targetSection = "#contacto";
+      const matchedProduct = products.find((product) =>
+        product.name.toLowerCase().includes(searchLower)
+      );
+
+      if (matchedProduct) {
+        if (matchedProduct.section === "catalogo" && onProductSelect) {
+          onProductSelect(matchedProduct.id);
+          setSearchTerm("");
+          setShowDropdown(false);
+          return;
+        } else if (matchedProduct.section === "catalogo") {
+          targetSection = "#catalogo";
+        } else if (matchedProduct.section === "gallery") {
+          targetSection = ".gallery-section";
+        }
       } else {
-        targetSection = "#catalogo";
+        if (searchLower.includes("inicio") || searchLower.includes("home")) {
+          targetSection = "#inicio";
+        } else if (
+          searchLower.includes("catalogo") ||
+          searchLower.includes("catálogo") ||
+          searchLower.includes("productos")
+        ) {
+          targetSection = "#catalogo";
+        } else if (
+          searchLower.includes("contacto") ||
+          searchLower.includes("contact")
+        ) {
+          targetSection = "#contacto";
+        } else {
+          targetSection = "#catalogo";
+        }
       }
 
       const element = document.querySelector(targetSection);
@@ -2534,13 +2547,38 @@ const Header = () => {
         element.scrollIntoView({ behavior: "smooth" });
       }
       setSearchTerm("");
+      setShowDropdown(false);
     }
+  };
+
+  const handleProductSelect = (product: Product) => {
+    if (product.section === "catalogo" && onProductSelect) {
+      onProductSelect(product.id);
+    } else {
+      let targetSection = "";
+
+      if (product.section === "catalogo") {
+        targetSection = "#catalogo";
+      } else if (product.section === "gallery") {
+        targetSection = ".gallery-section";
+      }
+
+      const element = document.querySelector(targetSection);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setSearchTerm("");
+    setShowDropdown(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch();
+    } else if (e.key === "Escape") {
+      setShowDropdown(false);
+      setSearchTerm("");
     }
   };
 
@@ -2595,7 +2633,10 @@ const Header = () => {
               <div className="d-lg-none mt-3">
                 <Form className="search-form-mobile">
                   <InputGroup>
-                    <div className="input-group position-relative">
+                    <div
+                      className="input-group position-relative"
+                      ref={dropdownRef}
+                    >
                       <i
                         className="bx bx-search search-icon"
                         onClick={handleSearch}
@@ -2610,12 +2651,25 @@ const Header = () => {
                       ></i>
                       <Form.Control
                         type="search"
-                        placeholder="Buscar secciones..."
+                        placeholder="Buscar productos o secciones..."
                         className="search-input"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
                       />
+                      {showDropdown && (
+                        <div className="search-dropdown">
+                          {filteredProducts.map((product) => (
+                            <div
+                              key={product.id}
+                              className="search-dropdown-item"
+                              onClick={() => handleProductSelect(product)}
+                            >
+                              {product.name}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </InputGroup>
                 </Form>
@@ -2625,7 +2679,7 @@ const Header = () => {
 
           <Form className="search-form col-3 d-none d-lg-block">
             <InputGroup>
-              <div className="input-group position-relative">
+              <div className="input-group position-relative" ref={dropdownRef}>
                 <i
                   className="bx bx-search search-icon"
                   onClick={handleSearch}
@@ -2640,12 +2694,25 @@ const Header = () => {
                 ></i>
                 <Form.Control
                   type="search"
-                  placeholder="Buscar secciones..."
+                  placeholder="Buscar productos o secciones..."
                   className="search-input"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
+                {showDropdown && (
+                  <div className="search-dropdown">
+                    {filteredProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className="search-dropdown-item"
+                        onClick={() => handleProductSelect(product)}
+                      >
+                        {product.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </InputGroup>
           </Form>
@@ -2660,7 +2727,7 @@ export default Header;
 
 ```
 
-## src\components\HeroSection.css
+## src/components/HeroSection.css
 
 ```
 .hero-section {
@@ -2737,7 +2804,7 @@ export default Header;
   font-size: 3rem;
   font-weight: bold;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   margin-bottom: 1rem !important;
 }
 
@@ -2847,7 +2914,7 @@ export default Header;
 
 ```
 
-## src\components\HeroSection.tsx
+## src/components/HeroSection.tsx
 
 ```
 import React from "react";
@@ -2941,7 +3008,80 @@ export default HeroSection;
 
 ```
 
-## src\index.css
+## src/components/animations.css
+
+```
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-logo {
+  animation: fadeInScale 1.2s ease-out 0.6s;
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+.animate-title {
+  animation: fadeInUp 1.2s ease-out 0.7s;
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+.animate-subtitle {
+  animation: fadeInUp 1.2s ease-out 0.7s;
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+.animate-buttons {
+  animation: fadeInScale 1.2s ease-out 0.8s;
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo,
+  .animate-title,
+  .animate-subtitle,
+  .animate-buttons {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+```
+
+## src/index.css
 
 ```
 body {
@@ -2954,7 +3094,7 @@ body {
 
 ```
 
-## src\index.tsx
+## src/index.tsx
 
 ```
 import React from "react";
@@ -2971,14 +3111,14 @@ root.render(
 
 ```
 
-## src\react-app-env.d.ts
+## src/react-app-env.d.ts
 
 ```
 /// <reference types="react-scripts" />
 
 ```
 
-## src\reportWebVitals.ts
+## src/reportWebVitals.ts
 
 ```
 import { ReportHandler } from 'web-vitals';
@@ -2999,7 +3139,7 @@ export default reportWebVitals;
 
 ```
 
-## src\setupTests.ts
+## src/setupTests.ts
 
 ```
 // jest-dom adds custom jest matchers for asserting on DOM nodes.

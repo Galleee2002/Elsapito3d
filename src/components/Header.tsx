@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
 import "./Header.css";
 
@@ -59,76 +59,60 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      const searchLower = searchTerm.toLowerCase();
-      let targetSection = "";
-
-      const matchedProduct = products.find((product) =>
-        product.name.toLowerCase().includes(searchLower)
-      );
-
-      if (matchedProduct) {
-        if (matchedProduct.section === "catalogo" && onProductSelect) {
-          onProductSelect(matchedProduct.id);
-          setSearchTerm("");
-          setShowDropdown(false);
-          return;
-        } else if (matchedProduct.section === "catalogo") {
-          targetSection = "#catalogo";
-        } else if (matchedProduct.section === "gallery") {
-          targetSection = ".gallery-section";
-        }
-      } else {
-        if (searchLower.includes("inicio") || searchLower.includes("home")) {
-          targetSection = "#inicio";
-        } else if (
-          searchLower.includes("catalogo") ||
-          searchLower.includes("catálogo") ||
-          searchLower.includes("productos")
-        ) {
-          targetSection = "#catalogo";
-        } else if (
-          searchLower.includes("contacto") ||
-          searchLower.includes("contact")
-        ) {
-          targetSection = "#contacto";
-        } else {
-          targetSection = "#catalogo";
-        }
-      }
-
-      const element = document.querySelector(targetSection);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      setSearchTerm("");
-      setShowDropdown(false);
+  const scrollToSection = useCallback((selector: string) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const handleProductSelect = (product: Product) => {
+  const handleSearch = useCallback(() => {
+    if (!searchTerm.trim()) return;
+
+    const searchLower = searchTerm.toLowerCase();
+    const matchedProduct = products.find((product) =>
+      product.name.toLowerCase().includes(searchLower)
+    );
+
+    if (matchedProduct) {
+      if (matchedProduct.section === "catalogo" && onProductSelect) {
+        onProductSelect(matchedProduct.id);
+        setSearchTerm("");
+        setShowDropdown(false);
+        return;
+      } else if (matchedProduct.section === "catalogo") {
+        scrollToSection("#catalogo");
+      } else if (matchedProduct.section === "gallery") {
+        scrollToSection(".gallery-section");
+      }
+    } else {
+      let targetSection = "#catalogo";
+      
+      if (searchLower.includes("inicio") || searchLower.includes("home")) {
+        targetSection = "#inicio";
+      } else if (searchLower.includes("contacto") || searchLower.includes("contact")) {
+        targetSection = "#contacto";
+      }
+      
+      scrollToSection(targetSection);
+    }
+    
+    setSearchTerm("");
+    setShowDropdown(false);
+  }, [searchTerm, products, onProductSelect, scrollToSection]);
+
+  const handleProductSelect = useCallback((product: Product) => {
     if (product.section === "catalogo" && onProductSelect) {
       onProductSelect(product.id);
     } else {
-      let targetSection = "";
-
-      if (product.section === "catalogo") {
-        targetSection = "#catalogo";
-      } else if (product.section === "gallery") {
-        targetSection = ".gallery-section";
-      }
-
-      const element = document.querySelector(targetSection);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      const targetSection = product.section === "catalogo" ? "#catalogo" : ".gallery-section";
+      scrollToSection(targetSection);
     }
     setSearchTerm("");
     setShowDropdown(false);
-  };
+  }, [onProductSelect, scrollToSection]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch();
@@ -136,7 +120,77 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
       setShowDropdown(false);
       setSearchTerm("");
     }
-  };
+  }, [handleSearch]);
+
+  const searchDropdown = useMemo(() => {
+    if (!showDropdown) return null;
+    
+    return (
+      <div className="search-dropdown">
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="search-dropdown-item"
+            onClick={() => handleProductSelect(product)}
+          >
+            {product.name}
+          </div>
+        ))}
+      </div>
+    );
+  }, [showDropdown, filteredProducts, handleProductSelect]);
+
+  const searchForm = useMemo(() => (
+    <Form className="search-form col-3 d-none d-lg-block">
+      <InputGroup>
+        <div className="input-group position-relative" ref={dropdownRef}>
+          <i
+            className="bx bx-search search-icon"
+            onClick={handleSearch}
+            style={{ cursor: "pointer", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "")}
+          />
+          <Form.Control
+            type="search"
+            placeholder="Buscar productos o secciones..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          {searchDropdown}
+        </div>
+      </InputGroup>
+    </Form>
+  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
+
+  const mobileSearchForm = useMemo(() => (
+    <div className="d-lg-none mt-3">
+      <Form className="search-form-mobile">
+        <InputGroup>
+          <div className="input-group position-relative" ref={dropdownRef}>
+            <i
+              className="bx bx-search search-icon"
+              onClick={handleSearch}
+              style={{ cursor: "pointer", transition: "color 0.3s ease" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "")}
+            />
+            <Form.Control
+              type="search"
+              placeholder="Buscar productos o secciones..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            {searchDropdown}
+          </div>
+        </InputGroup>
+      </Form>
+    </div>
+  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
 
   return (
     <>
@@ -162,7 +216,7 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
             <i
               className="bx bx-menu text-white"
               style={{ fontSize: "1.5rem" }}
-            ></i>
+            />
           </Navbar.Toggle>
 
           <Navbar.Collapse id="basic-navbar-nav">
@@ -171,108 +225,27 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
                 href="#inicio"
                 className="nav-button me-lg-3 mb-2 mb-lg-0"
               >
-                <i className="bx bx-home-alt"></i>
+                <i className="bx bx-home-alt" />
                 Inicio
               </Nav.Link>
               <Nav.Link
                 href="#catalogo"
                 className="nav-button me-lg-3 mb-2 mb-lg-0"
               >
-                <i className="bx bx-grid-alt"></i>
+                <i className="bx bx-grid-alt" />
                 Catálogo
               </Nav.Link>
               <Nav.Link href="#contacto" className="nav-button mb-2 mb-lg-0">
-                <i className="bx bx-message-dots"></i>
+                <i className="bx bx-message-dots" />
                 Contacto
               </Nav.Link>
 
-              <div className="d-lg-none mt-3">
-                <Form className="search-form-mobile">
-                  <InputGroup>
-                    <div
-                      className="input-group position-relative"
-                      ref={dropdownRef}
-                    >
-                      <i
-                        className="bx bx-search search-icon"
-                        onClick={handleSearch}
-                        style={{
-                          cursor: "pointer",
-                          transition: "color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.color = "#77bb54")
-                        }
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                      ></i>
-                      <Form.Control
-                        type="search"
-                        placeholder="Buscar productos o secciones..."
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                      />
-                      {showDropdown && (
-                        <div className="search-dropdown">
-                          {filteredProducts.map((product) => (
-                            <div
-                              key={product.id}
-                              className="search-dropdown-item"
-                              onClick={() => handleProductSelect(product)}
-                            >
-                              {product.name}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </InputGroup>
-                </Form>
-              </div>
+              {mobileSearchForm}
             </Nav>
           </Navbar.Collapse>
 
-          <Form className="search-form col-3 d-none d-lg-block">
-            <InputGroup>
-              <div className="input-group position-relative" ref={dropdownRef}>
-                <i
-                  className="bx bx-search search-icon"
-                  onClick={handleSearch}
-                  style={{
-                    cursor: "pointer",
-                    transition: "color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#77bb54")
-                  }
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                ></i>
-                <Form.Control
-                  type="search"
-                  placeholder="Buscar productos o secciones..."
-                  className="search-input"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-                {showDropdown && (
-                  <div className="search-dropdown">
-                    {filteredProducts.map((product) => (
-                      <div
-                        key={product.id}
-                        className="search-dropdown-item"
-                        onClick={() => handleProductSelect(product)}
-                      >
-                        {product.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </InputGroup>
-          </Form>
-          <div className=" col-4 transparent-div"></div>
+          {searchForm}
+          <div className="col-4 transparent-div" />
         </div>
       </Navbar>
     </>
