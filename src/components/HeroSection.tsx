@@ -11,9 +11,15 @@ const HeroSection = () => {
     }
   }, []);
 
-  const handleCatalogClick = useCallback(() => scrollToSection("#catalogo"), [scrollToSection]);
-  const handleShippingClick = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
-  
+  const handleCatalogClick = useCallback(
+    () => scrollToSection("#catalogo"),
+    [scrollToSection]
+  );
+  const handleShippingClick = useCallback(
+    () => scrollToSection("#contacto"),
+    [scrollToSection]
+  );
+
   const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
   }, []);
@@ -26,7 +32,7 @@ const HeroSection = () => {
             <div className="logo-container animate-logo">
               <div className="logo-circle">
                 <img
-                  src="/logo.png"
+                  src="/img/logo.png"
                   alt="El Sapito 3D Logo"
                   className="logo-image"
                 />

@@ -3,11 +3,23 @@
     "id": 1,
     "name": "Tarjetero para reja",
     "description": "Compacto y fácil de transportar, este tarjetero es ideal para tarjetas de presentación, planchas de stickers, etc.",
-    "images": [
-      "/tarjetero.jpg",
-      "/tarjetero1.jpg",
-      "/tarjetero3.jpg",
-      "/tarjetero2.jpg"
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/tarjetero.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/tarjetero1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/tarjetero3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/tarjetero2.jpg"
+      }
     ],
     "price": "$4000 ",
     "details": {
@@ -21,11 +33,24 @@
     "id": 2,
     "name": "Expositor encastrable",
     "description": "Organizá y destacá tus piezas con este práctico estante escalonado, ideal para mostrar figuras, anillos o productos pequeños.",
-    "images": [
-      "/estante1.jpg",
-      "/estante2.jpg",
-      "/estante3.jpg",
-      "/estante4.jpg"
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/estante1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/estante2.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/estante3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/estante4.jpg"
+      }
     ],
     "price": "$10000",
     "details": {
@@ -39,7 +64,16 @@
     "id": 3,
     "name": "Calesita giratoria expositora",
     "description": "Mostrá tus productos de forma ordenada y vistosa con este exhibidor giratorio impreso en 3D. Cuenta con dos niveles con ganchos para colgar accesorios, bijouterie, llaveros o miniaturas.",
-    "images": ["/calesita1.jpg", "/calesita2.jpg"],
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/calesita1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/calesita2.jpg"
+      }
+    ],
     "price": " $13000 ",
     "details": {
       "materials": ["PLA+"],
@@ -52,7 +86,17 @@
     "id": 4,
     "name": "Lapicero expositor",
     "description": "Soporte organizador semicircular para elementos de escritorio o modelado. Con 21 orificios distribuidos en tres niveles, ideal para guardar lápices, pinceles, herramientas de modelado o repujado. Diseño compacto, fabricado en material resistente y fácil de limpiar.",
-    "images": ["/lapicero.jpg", "/lapicero1.jpg"],
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/lapicero.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/lapicero1.jpg"
+      }
+    ],
     "price": "$6500",
     "details": {
       "materials": ["PLA+"],
@@ -65,12 +109,28 @@
     "id": 5,
     "name": "Expositor encastrable para cuadernos / libros",
     "description": "Expositor organizador modular.Su diseño con ranuras paralelas permite mantener las piezas ordenadas y visibles, facilitando su exhibición o uso diario.",
-    "images": [
-      "/expositor.jpg",
-      "/expositor1.jpg",
-      "/expositor2.jpg",
-      "/expositor3.jpg",
-      "/expositor4.jpg"
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/expositor.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/expositor1.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/expositor2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/expositor3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/expositor4.jpg"
+      }
     ],
     "price": "$7500",
     "details": {
@@ -84,7 +144,17 @@
     "id": 6,
     "name": "Gancho para reja / Blistero",
     "description": "Gancho blistero con medidas de 3cm, 6cm y 9cm de largo. Aclarar cuando se hace el pedido medidas de los cuadraditos y grosor de los alambres de tu reja",
-    "images": ["/gancho1.jpg", "/gancho2.jpg"],
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/gancho1.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/gancho2.jpg"
+      }
+    ],
     "price": "5u x $3000",
     "details": {
       "materials": ["PLA+"],
@@ -95,28 +165,126 @@
   },
   {
     "id": 7,
-    "name": "",
-    "description": "",
-    "images": [""],
-    "price": "",
+    "name": "Expositor escalonado de tres para stickers",
+    "description": "Expositor encastrable para stickers, elegí el ancho que vos quieras acorde a tus necesidades. Promo 1 : Dos extremos para tres escalones, tres compartimentos de 15cm y una tanda de nueve separadores para stickers - Promo 2 : Dos extremos para tres escalones, seis compartimientos de 15cm y dos tandas de separadores - Promo 3 : Dos extremos de tres escalones, nueve compartimientos de 15cm y tres tandas de separadores",
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/escalones1.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/escalones5.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/escalones6.jpg"
+      }
+    ],
+    "price": "$20000 - $30000 - $40000",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "20cm x 20cm x 35cm",
       "printTime": "15-20 días",
-      "promotion": ""
+      "promotion": "Promo 1 - $20000 - Promo 2 - $30000 - Promo 3 - $40000"
     }
   },
   {
     "id": 8,
-    "name": "",
-    "description": "",
-    "images": [""],
-    "price": "$",
+    "name": "Expositor escalonado de cuatro para stickers",
+    "description": "Expositor encastrable para stickers, elegí el ancho que vos quieras acorde a tus necesidades. Promo 1 : Dos extremos para cuatro escalones, cuatro compartimentos de 15cm y dos tandas de nueve separadores para stickers - Promo 2 : Dos extremos para cuatro escalones, ocho compartimientos de 15cm y tres tandas de separadores - Promo 3 : Dos extremos de cuatro escalones, doce compartimientos de 15cm y cuatro tandas de separadores",
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/cuatroescalones1.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/cuatroescalones.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cuatroescalones2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cuatroescalones3.jpg"
+      }
+    ],
+    "price": "$25000 - $40000 - $50000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "8cm x 6cm x 4cm",
-      "printTime": "5-10 días",
-      "promotion": ""
+      "dimensions": "20cm x 20cm x 35cm",
+      "printTime": "15-20 días",
+      "promotion": "Promo 1 - $25000 - Promo 2 - $40000 - Promo 3 - $50000"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Expositor escalonado de cinco para stickers",
+    "description": "Expositor encastrable para stickers, elegí el ancho que vos quieras acorde a tus necesidades. Promo 1 : Dos extremos para cinco escalones, cinco compartimentos de 15cm y dos tandas de nueve separadores para stickers - Promo 2 : Dos extremos para cinco escalones, diez compartimientos de 15cm y tres tandas de separadores - Promo 3 : Dos extremos de cinco escalones, quince compartimientos de 15cm y cuatro tandas de separadores",
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/cincoescalones.jpg"
+      },
+
+      {
+        "type": "image",
+        "src": "/img/cincoescalones2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones4.jpg"
+      }
+    ],
+    "price": "$30000 - $55000 - $65000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "20cm x 20cm x 35cm",
+      "printTime": "15-20 días",
+      "promotion": "Promo 1 - $30000 - Promo 2 - $55000 - Promo 3 - $65000"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Ruleta de la fortuna",
+    "description": "",
+    "media": [
+      {
+        "type": "video",
+        "src": "/videos/videoruleta.mp4",
+        "thumbnail": "/img/cincoescalones.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cincoescalones4.jpg"
+      }
+    ],
+    "price": "$30000 - $55000 - $65000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "20cm x 20cm x 35cm",
+      "printTime": "15-20 días",
+      "promotion": "Promo 1 - $30000 - Promo 2 - $55000 - Promo 3 - $65000"
     }
   }
 ]

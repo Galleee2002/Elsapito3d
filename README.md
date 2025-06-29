@@ -1,6 +1,6 @@
 # Código del Proyecto
 
-## src/App.css
+## src\App.css
 
 ```
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap");
@@ -19,14 +19,11 @@ body {
 
 .App {
   min-height: 100vh;
-  background: url("/public/background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background: url("/public/background.jpg") center/cover fixed no-repeat;
   position: relative;
   padding-top: 70px;
 }
+
 .App::before {
   content: "";
   position: absolute;
@@ -54,23 +51,12 @@ body {
 
 @media (max-width: 768px) {
   .App {
-    background: url("/public/background.jpg");
-    background-size: cover;
-    background-position: center;
     background-attachment: scroll;
-    background-repeat: no-repeat;
   }
 }
-
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-}
-
 ```
 
-## src/App.test.tsx
+## src\App.test.tsx
 
 ```
 import React from 'react';
@@ -85,7 +71,7 @@ test('renders learn react link', () => {
 
 ```
 
-## src/App.tsx
+## src\App.tsx
 
 ```
 import React, { useRef } from "react";
@@ -121,27 +107,79 @@ export default App;
 
 ```
 
-## src/components/Catalog.css
+## src\components\animations.css
+
+```
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-logo {
+  animation: fadeInScale 1.2s ease-out 0.6s both;
+}
+
+.animate-title {
+  animation: fadeInUp 1.2s ease-out 0.7s both;
+}
+
+.animate-subtitle {
+  animation: fadeInUp 1.2s ease-out 0.7s both;
+}
+
+.animate-buttons {
+  animation: fadeInScale 1.2s ease-out 0.8s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo,
+  .animate-title,
+  .animate-subtitle,
+  .animate-buttons {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+```
+
+## src\components\Catalog.css
 
 ```
 .catalog-section {
   min-height: 100vh;
-  padding: 80px 0;
-  background: linear-gradient(
-    135deg,
-    rgba(119, 187, 84, 0.1) 0%,
-    rgba(76, 175, 80, 0.05) 100%
-  );
+  padding: 120px 0 80px 0;
+  background: transparent;
   position: relative;
+  margin-top: 20px;
 }
 
 .catalog-section::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(119, 187, 84, 0.1) 0%,
+    rgba(76, 175, 80, 0.05) 100%
+  );
   background-image: radial-gradient(
       circle at 15% 30%,
       rgba(119, 187, 84, 0.1) 2px,
@@ -154,6 +192,7 @@ export default App;
     );
   background-size: 40px 40px;
   pointer-events: none;
+  border-radius: 50px 50px 0 0;
 }
 
 .container {
@@ -168,7 +207,7 @@ export default App;
 }
 
 .catalog-title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: bold;
   color: #77bb54;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
@@ -178,7 +217,7 @@ export default App;
 }
 
 .catalog-subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: #000000b3;
   margin-bottom: 2rem;
   position: relative;
@@ -187,12 +226,14 @@ export default App;
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
 .product-card-wrapper {
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transform: translateX(-50px);
 }
 
 .product-card-wrapper.animate-slide-in {
@@ -203,11 +244,11 @@ export default App;
 .product-card {
   border: none;
   border-radius: 20px;
-  overflow: visible;
+  overflow: hidden;
   transition: all 0.3s ease;
   background: rgba(119, 187, 84, 0.4);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 2;
@@ -221,7 +262,7 @@ export default App;
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
   background: rgba(119, 187, 84, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .product-image-container {
@@ -244,10 +285,7 @@ export default App;
 
 .image-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -270,28 +308,27 @@ export default App;
 
 .product-body {
   padding: 1.5rem;
-  background: rgba(119, 187, 84, 0.4);
-  backdrop-filter: blur(10px);
+  background: transparent;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .product-title {
-  font-size: 1.3rem;
+  font-size: clamp(1.3rem, 2.5vw, 1.3rem);
   font-weight: bold;
   color: #ffff;
   margin-bottom: 0.8rem;
   line-height: 1.3;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 }
 
 .product-description {
   color: #ffff;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
   line-height: 1.5;
   margin-bottom: 1rem;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
   flex: 1;
 }
 
@@ -300,21 +337,17 @@ export default App;
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  position: relative;
 }
 
 .product-price {
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 3vw, 1.4rem);
   font-weight: bold;
   color: #000000b3;
 }
 
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   display: flex;
@@ -409,10 +442,7 @@ export default App;
 
 .fullscreen-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
@@ -543,7 +573,6 @@ export default App;
   cursor: pointer;
   transition: all 0.3s ease;
   opacity: 0.6;
-  position: relative;
 }
 
 .thumbnail:hover {
@@ -570,7 +599,7 @@ export default App;
 }
 
 .modal-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: bold;
   color: #ffff;
   margin: 0;
@@ -578,7 +607,7 @@ export default App;
 
 .modal-description {
   color: #ffff;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
   line-height: 1.6;
   margin: 0;
 }
@@ -660,21 +689,17 @@ export default App;
 }
 
 @media (max-width: 768px) {
-  .catalog-title {
-    font-size: 2.2rem;
-  }
-
-  .catalog-subtitle {
-    font-size: 1.1rem;
+  .catalog-section {
+    padding: 100px 0 60px 0;
+    margin-top: 15px;
   }
 
   .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
   }
 
   .product-card-wrapper {
-    transform: translateX(-50px);
+    transform: translateX(-30px);
   }
 
   .product-image-container {
@@ -683,18 +708,6 @@ export default App;
 
   .product-body {
     padding: 1.2rem;
-  }
-
-  .product-title {
-    font-size: 1.2rem;
-  }
-
-  .product-description {
-    font-size: 0.9rem;
-  }
-
-  .product-price {
-    font-size: 1.2rem;
   }
 
   .modal-content {
@@ -706,14 +719,6 @@ export default App;
 
   .modal-image {
     height: 250px;
-  }
-
-  .modal-title {
-    font-size: 1.5rem;
-  }
-
-  .modal-description {
-    font-size: 1rem;
   }
 
   .modal-actions {
@@ -748,25 +753,17 @@ export default App;
 
 @media (max-width: 480px) {
   .catalog-section {
-    padding: 60px 0;
+    padding: 80px 0 60px 0;
+    margin-top: 10px;
   }
 
-  .catalog-title {
-    font-size: 1.8rem;
-  }
-
-  .container {
-    padding: 0 15px;
+  .catalog-section::before {
+    border-radius: 30px 30px 0 0;
   }
 
   .products-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .product-card-wrapper {
-    transform: translateX(-30px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .product-footer {
@@ -792,14 +789,6 @@ export default App;
 
   .modal-image {
     height: 200px;
-  }
-
-  .modal-title {
-    font-size: 1.3rem;
-  }
-
-  .modal-description {
-    font-size: 0.95rem;
   }
 
   .modal-details {
@@ -846,6 +835,7 @@ export default App;
     width: 30px;
     height: 30px;
   }
+
   .fullscreen-close {
     top: 15px;
     right: 20px;
@@ -861,10 +851,6 @@ export default App;
 }
 
 @media (max-width: 350px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
   .contact-btn,
   .quote-btn {
     padding: 0.8rem 1.5rem;
@@ -889,52 +875,31 @@ export default App;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .product-card-wrapper {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .product-card {
-    transition: none;
-  }
-
-  .product-image {
-    transition: none;
-  }
-
-  .modal-overlay {
-    animation: none;
-  }
-
-  .modal-content {
-    animation: none;
-  }
-
-  .image-overlay {
-    transition: none;
-  }
-
-  .nav-arrow {
-    transition: none;
-  }
-
+  .product-card-wrapper,
+  .product-card,
+  .product-image,
+  .image-overlay,
+  .nav-arrow,
   .thumbnail {
     transition: none;
   }
 
-  .fullscreen-overlay {
+  .modal-overlay,
+  .modal-content,
+  .fullscreen-overlay,
+  .fullscreen-image {
     animation: none;
   }
 
-  .fullscreen-image {
-    animation: none;
+  .product-card-wrapper {
+    opacity: 1;
+    transform: none;
   }
 }
 
 ```
 
-## src/components/Catalog.tsx
+## src\components\Catalog.tsx
 
 ```
 import React, {
@@ -944,6 +909,7 @@ import React, {
   useCallback,
   forwardRef,
   useImperativeHandle,
+  useMemo,
 } from "react";
 import "./Catalog.css";
 
@@ -967,30 +933,25 @@ interface CatalogRef {
 
 const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
 
-
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const response = await fetch('/products.json');
-        
         if (!response.ok) {
           throw new Error(`Error al cargar productos: ${response.status}`);
         }
-        
         const data: Product[] = await response.json();
         setProducts(data);
       } catch (err) {
         console.error('Error loading products:', err);
       }
     };
-  
     loadProducts();
   }, []);
 
@@ -1034,50 +995,17 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
         }
       });
     };
-  }, []);
+  }, [products]);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (activeDropdown !== null) {
-        const dropdownElement = document.querySelector(
-          `[data-dropdown="${activeDropdown}"]`
-        );
-        const buttonElement = document.querySelector(
-          `[data-button="${activeDropdown}"]`
-        );
-
-        if (dropdownElement && buttonElement) {
-          if (
-            !dropdownElement.contains(event.target as Node) &&
-            !buttonElement.contains(event.target as Node)
-          ) {
-            setActiveDropdown(null);
-          }
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [activeDropdown]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
+    document.body.style.overflow = isModalOpen ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isModalOpen]);
 
   const nextImage = useCallback(() => {
-    if (
-      selectedProduct &&
-      currentImageIndex < selectedProduct.images.length - 1
-    ) {
+    if (selectedProduct && currentImageIndex < selectedProduct.images.length - 1) {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   }, [selectedProduct, currentImageIndex]);
@@ -1094,6 +1022,46 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
     setCurrentImageIndex(0);
     setIsFullscreen(false);
   }, []);
+
+  const openModal = useCallback((product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+    setCurrentImageIndex(0);
+  }, []);
+
+  const goToImage = useCallback((index: number) => {
+    setCurrentImageIndex(index);
+  }, []);
+
+  const openFullscreen = useCallback(() => {
+    setIsFullscreen(true);
+  }, []);
+
+  const closeFullscreen = useCallback(() => {
+    setIsFullscreen(false);
+  }, []);
+
+  const handleModalClick = useCallback((event: React.MouseEvent) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
+  }, [closeModal]);
+
+  const scrollToSection = useCallback((selector: string) => {
+    closeModal();
+    setTimeout(() => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }, [closeModal]);
+
+  const scrollToGallery = useCallback(() => scrollToSection(".gallery-section"), [scrollToSection]);
+  const scrollToFooter = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -1114,66 +1082,122 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [
-    isModalOpen,
-    selectedProduct,
-    currentImageIndex,
-    isFullscreen,
-    nextImage,
-    prevImage,
-    closeModal,
-  ]);
+  }, [isModalOpen, selectedProduct, currentImageIndex, isFullscreen, nextImage, prevImage, closeModal]);
 
-  const openModal = (product: Product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-    setActiveDropdown(null);
-    setCurrentImageIndex(0);
-  };
+  const modalContent = useMemo(() => {
+    if (!isModalOpen || !selectedProduct) return null;
 
-  const goToImage = (index: number) => {
-    setCurrentImageIndex(index);
-  };
+    return (
+      <div className="modal-overlay" onClick={handleModalClick} tabIndex={-1}>
+        <div className="modal-content">
+          <button className="modal-close" onClick={closeModal}>
+            ×
+          </button>
 
-  const openFullscreen = () => {
-    setIsFullscreen(true);
-  };
+          <div className="modal-image-container">
+            <img
+              src={selectedProduct.images[currentImageIndex]}
+              alt={`${selectedProduct.name} - Imagen ${currentImageIndex + 1}`}
+              className="modal-image"
+              onClick={openFullscreen}
+            />
 
-  const closeFullscreen = () => {
-    setIsFullscreen(false);
-  };
+            {selectedProduct.images.length > 1 && (
+              <>
+                <button
+                  className={`nav-arrow nav-arrow-left ${currentImageIndex === 0 ? "disabled" : ""}`}
+                  onClick={prevImage}
+                  disabled={currentImageIndex === 0}
+                >
+                  ←
+                </button>
 
-  const handleModalClick = (event: React.MouseEvent) => {
-    if (event.target === event.currentTarget) {
-      closeModal();
-    }
-  };
+                <button
+                  className={`nav-arrow nav-arrow-right ${
+                    currentImageIndex === selectedProduct.images.length - 1 ? "disabled" : ""
+                  }`}
+                  onClick={nextImage}
+                  disabled={currentImageIndex === selectedProduct.images.length - 1}
+                >
+                  →
+                </button>
 
-  const scrollToGallery = () => {
-    closeModal();
-    setTimeout(() => {
-      const gallerySection = document.querySelector(".gallery-section");
-      if (gallerySection) {
-        gallerySection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }, 100);
-  };
+                <div className="image-counter">
+                  {currentImageIndex + 1} / {selectedProduct.images.length}
+                </div>
 
-  const scrollToFooter = () => {
-    closeModal();
-    setTimeout(() => {
-      const footerSection = document.querySelector("#contacto");
-      if (footerSection) {
-        footerSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }, 100);
-  };
+                <div className="image-thumbnails">
+                  {selectedProduct.images.map((image, index) => (
+                    <button
+                      key={index}
+                      className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
+                      onClick={() => goToImage(index)}
+                    >
+                      <img src={image} alt={`Miniatura ${index + 1}`} />
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="modal-info">
+            <h3 className="modal-title">{selectedProduct.name}</h3>
+            <p className="modal-description">{selectedProduct.description}</p>
+
+            <div className="modal-details">
+              <div className="detail-row">
+                <span className="detail-label">Precio:</span>
+                <span className="detail-value price">{selectedProduct.price}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Promo:</span>
+                <span className="detail-value">{selectedProduct.details.promotion}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Materiales:</span>
+                <span className="detail-value">{selectedProduct.details.materials.join(", ")}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Dimensiones:</span>
+                <span className="detail-value">{selectedProduct.details.dimensions}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Demora:</span>
+                <span className="detail-value">{selectedProduct.details.printTime}</span>
+              </div>
+            </div>
+
+            <div className="modal-actions">
+              <button className="contact-btn" onClick={scrollToGallery}>
+                Ver colores disponibles
+              </button>
+              <button className="quote-btn" onClick={scrollToFooter}>
+                Solicitar Cotización
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }, [isModalOpen, selectedProduct, currentImageIndex, handleModalClick, closeModal, openFullscreen, prevImage, nextImage, goToImage, scrollToGallery, scrollToFooter]);
+
+  const fullscreenContent = useMemo(() => {
+    if (!isFullscreen || !selectedProduct) return null;
+
+    return (
+      <div className="fullscreen-overlay" onClick={closeFullscreen}>
+        <button className="fullscreen-close" onClick={closeFullscreen}>
+          ×
+        </button>
+        <img
+          src={selectedProduct.images[currentImageIndex]}
+          alt={`${selectedProduct.name} - Pantalla completa`}
+          className="fullscreen-image"
+        />
+      </div>
+    );
+  }, [isFullscreen, selectedProduct, currentImageIndex, closeFullscreen]);
 
   return (
     <section id="catalogo" className="catalog-section">
@@ -1200,6 +1224,7 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
                     src={product.images[0]}
                     className="product-image"
                     alt={product.name}
+                    loading="lazy"
                   />
                   <div className="image-overlay">
                     <span className="view-details">Ver detalles</span>
@@ -1220,149 +1245,20 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
         </div>
       </div>
 
-      {isModalOpen && selectedProduct && (
-        <div className="modal-overlay" onClick={handleModalClick} tabIndex={-1}>
-          <div className="modal-content">
-            <button className="modal-close" onClick={closeModal}>
-              ×
-            </button>
-
-            <div className="modal-image-container">
-              <img
-                src={selectedProduct.images[currentImageIndex]}
-                alt={`${selectedProduct.name} - Imagen ${
-                  currentImageIndex + 1
-                }`}
-                className="modal-image"
-                onClick={openFullscreen}
-              />
-
-              {selectedProduct.images.length > 1 && (
-                <>
-                  <button
-                    className={`nav-arrow nav-arrow-left ${
-                      currentImageIndex === 0 ? "disabled" : ""
-                    }`}
-                    onClick={prevImage}
-                    disabled={currentImageIndex === 0}
-                  >
-                    ←
-                  </button>
-
-                  <button
-                    className={`nav-arrow nav-arrow-right ${
-                      currentImageIndex === selectedProduct.images.length - 1
-                        ? "disabled"
-                        : ""
-                    }`}
-                    onClick={nextImage}
-                    disabled={
-                      currentImageIndex === selectedProduct.images.length - 1
-                    }
-                  >
-                    →
-                  </button>
-
-                  <div className="image-counter">
-                    {currentImageIndex + 1} / {selectedProduct.images.length}
-                  </div>
-
-                  <div className="image-thumbnails">
-                    {selectedProduct.images.map((image, index) => (
-                      <button
-                        key={index}
-                        className={`thumbnail ${
-                          index === currentImageIndex ? "active" : ""
-                        }`}
-                        onClick={() => goToImage(index)}
-                      >
-                        <img src={image} alt={`Miniatura ${index + 1}`} />
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="modal-info">
-              <h3 className="modal-title">{selectedProduct.name}</h3>
-              <p className="modal-description">{selectedProduct.description}</p>
-
-              <div className="modal-details">
-                <div className="detail-row">
-                  <span className="detail-label">Precio:</span>
-                  <span className="detail-value price">
-                    {selectedProduct.price}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Promo:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.promotion}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Materiales:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.materials.join(", ")}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Dimensiones:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.dimensions}
-                  </span>
-                </div>
-                <div className="detail-row">
-                  <span className="detail-label">Demora:</span>
-                  <span className="detail-value">
-                    {selectedProduct.details.printTime}
-                  </span>
-                </div>
-              </div>
-
-              <div className="modal-actions">
-                <button className="contact-btn" onClick={scrollToGallery}>
-                  Ver colores disponibles
-                </button>
-                <button className="quote-btn" onClick={scrollToFooter}>
-                  Solicitar Cotización
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {isFullscreen && selectedProduct && (
-        <div className="fullscreen-overlay" onClick={closeFullscreen}>
-          <button className="fullscreen-close" onClick={closeFullscreen}>
-            ×
-          </button>
-          <img
-            src={selectedProduct.images[currentImageIndex]}
-            alt={`${selectedProduct.name} - Pantalla completa`}
-            className="fullscreen-image"
-          />
-        </div>
-      )}
+      {modalContent}
+      {fullscreenContent}
     </section>
   );
 });
 
 export default Catalog;
-
 ```
 
-## src/components/Footer.css
+## src\components\Footer.css
 
 ```
 .footer-section {
-  background: linear-gradient(
-    135deg,
-    rgba(119, 187, 84, 0.9) 0%,
-    rgba(76, 175, 80, 0.9) 100%
-  );
+  background: linear-gradient(135deg, rgba(119, 187, 84, 0.9) 0%, rgba(76, 175, 80, 0.9) 100%);
   padding: 60px 0 20px;
   position: relative;
   overflow: hidden;
@@ -1371,20 +1267,9 @@ export default Catalog;
 .footer-section::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(
-      circle at 15% 30%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 85% 70%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    );
+  inset: 0;
+  background-image: radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 85% 70%, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
   background-size: 40px 40px;
   pointer-events: none;
 }
@@ -1409,7 +1294,7 @@ export default Catalog;
 
 .footer-title {
   color: white;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
   font-weight: bold;
   margin-bottom: 1.5rem;
   display: flex;
@@ -1430,7 +1315,7 @@ export default Catalog;
 
 .footer-text {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -1459,14 +1344,7 @@ export default Catalog;
 
 .instagram-footer-button {
   border: 2px solid rgba(255, 255, 255, 0.8);
-  background: linear-gradient(
-    45deg,
-    rgba(240, 148, 51, 0.8) 0%,
-    rgba(230, 104, 60, 0.8) 25%,
-    rgba(220, 39, 67, 0.8) 50%,
-    rgba(204, 35, 102, 0.8) 75%,
-    rgba(188, 24, 136, 0.8) 100%
-  );
+  background: linear-gradient(45deg, rgba(240, 148, 51, 0.8) 0%, rgba(230, 104, 60, 0.8) 25%, rgba(220, 39, 67, 0.8) 50%, rgba(204, 35, 102, 0.8) 75%, rgba(188, 24, 136, 0.8) 100%);
   color: white;
   font-weight: 600;
   padding: 0.75rem 2rem;
@@ -1483,14 +1361,7 @@ export default Catalog;
 }
 
 .instagram-footer-button:hover {
-  background: linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   border-color: #e1306c;
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
@@ -1512,7 +1383,7 @@ export default Catalog;
 .info-item h6 {
   color: white;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 2vw, 1rem);
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -1525,7 +1396,7 @@ export default Catalog;
 }
 
 .info-item p {
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
   line-height: 1.6;
   margin: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -1541,7 +1412,7 @@ export default Catalog;
 
 .copyright {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
   margin: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -1557,7 +1428,6 @@ export default Catalog;
   }
 
   .footer-title {
-    font-size: 1.2rem;
     margin-bottom: 1rem;
   }
 
@@ -1581,7 +1451,6 @@ export default Catalog;
   }
 
   .footer-title {
-    font-size: 1.1rem;
     margin-bottom: 1rem;
   }
 
@@ -1590,7 +1459,6 @@ export default Catalog;
   }
 
   .footer-text {
-    font-size: 0.9rem;
     margin-bottom: 1rem;
   }
 
@@ -1606,18 +1474,6 @@ export default Catalog;
   .info-item {
     margin-bottom: 1rem;
   }
-
-  .info-item h6 {
-    font-size: 0.95rem;
-  }
-
-  .info-item p {
-    font-size: 0.85rem;
-  }
-
-  .copyright {
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -1626,7 +1482,6 @@ export default Catalog;
   }
 
   .footer-title {
-    font-size: 1rem;
     flex-direction: column;
     text-align: center;
     gap: 0.3rem;
@@ -1642,35 +1497,31 @@ export default Catalog;
 
   .instagram-footer-button {
     padding: 0.5rem 1rem;
-    font-size: 0.85rem;
     flex-direction: column;
     gap: 0.3rem;
   }
 
   .info-item h6 {
-    font-size: 0.9rem;
     justify-content: center;
   }
 
   .info-item p {
-    font-size: 0.8rem;
     text-align: center;
   }
 }
-
 ```
 
-## src/components/Footer.tsx
+## src\components\Footer.tsx
 
 ```
-import React from "react";
+import React, { useCallback } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./Footer.css";
 
 const Footer = () => {
-  const handleInstagramClick = () => {
+  const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
-  };
+  }, []);
 
   return (
     <footer id="contacto" className="footer-section">
@@ -1679,7 +1530,7 @@ const Footer = () => {
           <Col lg={4} md={12} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bx-map"></i>
+                <i className="bx bx-map" />
                 Nuestra Ubicación
               </h4>
               <div className="map-container">
@@ -1692,7 +1543,7 @@ const Footer = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Ubicación El Sapito 3D"
-                ></iframe>
+                />
               </div>
               <div className="text-showroom">
                 <p>
@@ -1707,7 +1558,7 @@ const Footer = () => {
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bxl-instagram"></i>
+                <i className="bx  bx-cart"></i>
                 Hace tu pedido
               </h4>
               <div className="footer-text">
@@ -1715,7 +1566,8 @@ const Footer = () => {
                 <ol className="footer-list">
                   <li> 1 - Elegí el producto que te guste del catálogo.</li>
                   <li>
-                    2 - Seleccioná la cantidad que querés y el color disponible.
+                    2 - Tené en cuenta la cantidad que querés y el color
+                    disponible.
                   </li>
                   <li>
                     3 - Una vez elegido, escribinos por mensaje privado en
@@ -1727,7 +1579,7 @@ const Footer = () => {
                 className="instagram-footer-button"
                 onClick={handleInstagramClick}
               >
-                <i className="bx bxl-instagram"></i>
+                <i className="bx bxl-instagram" />
                 Solictar cotización
               </Button>
             </div>
@@ -1736,20 +1588,20 @@ const Footer = () => {
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bx bx-info-circle"></i>
+                <i className="bx bx-info-circle" />
                 Información de Compra
               </h4>
               <div className="info-section">
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-truck"></i> Envíos
+                    <i className="bx bx-truck" /> Envíos
                   </h6>
                   <p>• Envíos a todo el país</p>
                   <p>• Por Correo Argentino a cargo del comprador</p>
                 </div>
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-credit-card"></i> Formas de Pago
+                    <i className="bx bx-credit-card" /> Formas de Pago
                   </h6>
                   <p>
                     • Transferencia bancaria
@@ -1760,7 +1612,7 @@ const Footer = () => {
                 </div>
                 <div className="info-item">
                   <h6>
-                    <i className="bx bx-time"></i> Proceso
+                    <i className="bx bx-time" /> Proceso
                   </h6>
                   <p>
                     • Cotización gratuita
@@ -1792,7 +1644,7 @@ export default Footer;
 
 ```
 
-## src/components/Gallery.css
+## src\components\Gallery.css
 
 ```
 .gallery-section {
@@ -1811,10 +1663,7 @@ export default Footer;
 .gallery-section::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-image: radial-gradient(
       circle at 30% 40%,
       rgba(119, 187, 84, 0.08) 2px,
@@ -1897,6 +1746,7 @@ export default Footer;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 65%;
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation: fadeInScale 0.8s ease-out;
 }
@@ -1914,10 +1764,7 @@ export default Footer;
 
 .gallery-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     45deg,
     rgba(0, 0, 0, 0.1) 0%,
@@ -1933,25 +1780,25 @@ export default Footer;
 }
 
 .gallery-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: bold;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   animation: slideInUp 0.6s ease-out 0.2s both;
-  color: white;
+  transition: color 0.3s ease;
 }
 
 .gallery-description {
-  font-size: 2rem;
+  font-size: clamp(1rem, 4vw, 2rem);
   line-height: 1.6;
   margin-bottom: 2rem;
   opacity: 0.9;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
   animation: slideInUp 0.6s ease-out 0.4s both;
-  color: white;
+  transition: color 0.3s ease;
 }
 
 @keyframes slideInUp {
@@ -1968,8 +1815,11 @@ export default Footer;
 .gallery-indicators {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 1.5rem;
+  padding: 0 15px;
+  max-width: 100%;
 }
 
 .indicator {
@@ -1981,6 +1831,7 @@ export default Footer;
   transition: all 0.3s ease;
   opacity: 0.8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 .indicator:hover {
@@ -2026,23 +1877,14 @@ export default Footer;
     right: 15px;
   }
 
-  .gallery-title {
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .gallery-description {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
   .indicator {
     width: 20px;
     height: 20px;
   }
 
   .gallery-indicators {
-    gap: 15px;
+    gap: 12px;
+    margin-top: 1.5rem;
   }
 }
 
@@ -2076,23 +1918,27 @@ export default Footer;
     right: 10px;
   }
 
-  .gallery-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .gallery-description {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-
   .indicator {
     width: 18px;
     height: 18px;
   }
 
   .gallery-indicators {
-    gap: 12px;
+    gap: 10px;
+    margin-top: 1rem;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .gallery-indicators {
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .indicator {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -2107,14 +1953,8 @@ export default Footer;
     animation: none;
   }
 
-  .indicator {
-    transition: none;
-  }
-
-  .gallery-container {
-    transition: none;
-  }
-
+  .indicator,
+  .gallery-container,
   .gallery-arrow {
     transition: none;
   }
@@ -2122,10 +1962,10 @@ export default Footer;
 
 ```
 
-## src/components/Gallery.tsx
+## src\components\Gallery.tsx
 
 ```
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Gallery.css";
 
@@ -2140,63 +1980,196 @@ interface GalleryItem {
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const galleryItems: GalleryItem[] = [
-    {
-      id: 1,
-      image: "/tarjetero.jpg",
-      title: "Colores disponibles",
-      description: "Verde",
-      color: "#77bb54",
-    },
-    {
-      id: 2,
-      image: "/api/placeholder/400/300",
-      title: "Colores disponibles",
-      description: "Azul",
-      color: "#4ECDC4",
-    },
-    {
-      id: 3,
-      image: "/api/placeholder/400/280",
-      title: "Colores disponibles",
-      description: "Rojo",
-      color: "#FF6B6B",
-    },
-    {
-      id: 4,
-      image: "/api/placeholder/400/320",
-      title: "Colores disponibles",
-      description:
-        "Tiempos de producción optimizados sin comprometer la calidad",
-      color: "#45B7D1",
-    },
-    {
-      id: 5,
-      image: "/api/placeholder/400/290",
-      title: "Colores disponibles",
-      description:
-        "Tu conformidad es nuestra prioridad en cada proyecto realizado",
-      color: "#96CEB4",
-    },
-  ];
+  const galleryItems: GalleryItem[] = useMemo(
+    () => [
+      {
+        id: 22,
+        image: "blanco.jpg",
+        title: "Colores disponibles",
+        description: "Blanco",
+        color: "#ffff",
+      },
+      {
+        id: 20,
+        image: "crema.jpg",
+        title: "Colores disponibles",
+        description: "Crema",
+        color: "#FFFFD0",
+      },
+      {
+        id: 12,
+        image: "amarillo.jpg",
+        title: "Colores disponibles",
+        description: "Amarillo",
+        color: "#FFFF00",
+      },
+      {
+        id: 8,
+        image: "oro.jpg",
+        title: "Colores disponibles",
+        description: "Oro",
+        color: "#FFDF00",
+      },
+      {
+        id: 19,
+        image: "dorado.jpg",
+        title: "Colores disponibles",
+        description: "Dorado",
+        color: "#EFBF04",
+      },
+      {
+        id: 2,
+        image: "rojoanaranjado.jpg",
+        title: "Colores disponibles",
+        description: "Naranja",
+        color: "#C93C20",
+      },
+      {
+        id: 3,
+        image: "rojo.jpg",
+        title: "Colores disponibles",
+        description: "Rojo",
+        color: "#FF6B6B",
+      },
+      {
+        id: 14,
+        image: "rosa.jpg",
+        title: "Colores disponibles",
+        description: "Rosa",
+        color: "#FFC0CB",
+      },
+      {
+        id: 15,
+        image: "rosagold.jpg",
+        title: "Colores disponibles",
+        description: "Rosa Oro",
+        color: "#B76E79",
+      },
+      {
+        id: 10,
+        image: "fucsia.jpg",
+        title: "Colores disponibles",
+        description: "Fucsia",
+        color: "#FF00FF",
+      },
+      {
+        id: 11,
+        image: "violeta.jpg",
+        title: "Colores disponibles",
+        description: "Violeta",
+        color: "#8F00FF",
+      },
+      {
+        id: 16,
+        image: "violetapastel.jpg",
+        title: "Colores disponibles",
+        description: "Violeta Pastel",
+        color: "#C3B1E1",
+      },
+      {
+        id: 6,
+        image: "azul.jpg",
+        title: "Colores disponibles",
+        description: "Azul",
+        color: "#00446A",
+      },
+      {
+        id: 4,
+        image: "celestepastel.jpg",
+        title: "Colores disponibles",
+        description: "Azul pastel",
+        color: "#45B7D1",
+      },
+      {
+        id: 18,
+        image: "verdemanzana.jpg",
+        title: "Colores disponibles",
+        description: "Verde manzana",
+        color: "#8db600",
+      },
+      {
+        id: 1,
+        image: "/verde.jpg",
+        title: "Colores disponibles",
+        description: "Verde",
+        color: "#77bb54",
+      },
+      {
+        id: 21,
+        image: "verdepastel.jpg",
+        title: "Colores disponibles",
+        description: "Verde pastel",
+        color: "#80EF80",
+      },
+      {
+        id: 13,
+        image: "marronclarito.jpg",
+        title: "Colores disponibles",
+        description: "Marron Claro",
+        color: "#964B00",
+      },
+      {
+        id: 7,
+        image: "marron.jpg",
+        title: "Colores disponibles",
+        description: "Marron Oscuro",
+        color: "#895129",
+      },
+      {
+        id: 17,
+        image: "grisplata.jpg",
+        title: "Colores disponibles",
+        description: "Gris",
+        color: "#808080",
+      },
+      {
+        id: 9,
+        image: "negro.jpg",
+        title: "Colores disponibles",
+        description: "Negro",
+        color: "#000",
+      },
+      {
+        id: 5,
+        image: "cristal.jpg",
+        title: "Colores disponibles",
+        description: "Cristal",
+        color: "#a5e3e0",
+      },
+    ],
+    []
+  );
 
   const currentItem = galleryItems[currentIndex];
 
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
-  };
+  }, []);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === galleryItems.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [galleryItems.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? galleryItems.length - 1 : prevIndex - 1
     );
-  };
+  }, [galleryItems.length]);
+
+  const indicators = useMemo(
+    () =>
+      galleryItems.map((item, index) => (
+        <button
+          key={index}
+          className={`indicator ${index === currentIndex ? "active" : ""}`}
+          onClick={() => goToSlide(index)}
+          style={{ backgroundColor: item.color }}
+        />
+      )),
+    [galleryItems, currentIndex, goToSlide]
+  );
 
   return (
     <section className="gallery-section">
@@ -2210,6 +2183,7 @@ const Gallery = () => {
                   alt={currentItem.title}
                   className="gallery-image"
                   key={currentItem.id}
+                  loading="lazy"
                 />
                 <div className="gallery-overlay"></div>
 
@@ -2227,26 +2201,19 @@ const Gallery = () => {
                 </button>
               </div>
 
-              <div
-                className="gallery-content"
-                style={{ color: currentItem.color }}
-              >
-                <h3 className="gallery-title">{currentItem.title}</h3>
-                <p className="gallery-description">{currentItem.description}</p>
+              <div className="gallery-content">
+                <h3 className="gallery-title" style={{ color: "white" }}>
+                  {currentItem.title}
+                </h3>
+                <p
+                  className="gallery-description"
+                  style={{ color: currentItem.color }}
+                >
+                  {currentItem.description}
+                </p>
               </div>
 
-              <div className="gallery-indicators">
-                {galleryItems.map((item, index) => (
-                  <button
-                    key={index}
-                    className={`indicator ${
-                      index === currentIndex ? "active" : ""
-                    }`}
-                    onClick={() => goToSlide(index)}
-                    style={{ backgroundColor: item.color }}
-                  />
-                ))}
-              </div>
+              <div className="gallery-indicators">{indicators}</div>
             </div>
           </Col>
         </Row>
@@ -2259,7 +2226,7 @@ export default Gallery;
 
 ```
 
-## src/components/Header.css
+## src\components\Header.css
 
 ```
 .custom-navbar {
@@ -2439,10 +2406,10 @@ export default Gallery;
 
 ```
 
-## src/components/Header.tsx
+## src\components\Header.tsx
 
 ```
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
 import "./Header.css";
 
@@ -2503,76 +2470,60 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      const searchLower = searchTerm.toLowerCase();
-      let targetSection = "";
-
-      const matchedProduct = products.find((product) =>
-        product.name.toLowerCase().includes(searchLower)
-      );
-
-      if (matchedProduct) {
-        if (matchedProduct.section === "catalogo" && onProductSelect) {
-          onProductSelect(matchedProduct.id);
-          setSearchTerm("");
-          setShowDropdown(false);
-          return;
-        } else if (matchedProduct.section === "catalogo") {
-          targetSection = "#catalogo";
-        } else if (matchedProduct.section === "gallery") {
-          targetSection = ".gallery-section";
-        }
-      } else {
-        if (searchLower.includes("inicio") || searchLower.includes("home")) {
-          targetSection = "#inicio";
-        } else if (
-          searchLower.includes("catalogo") ||
-          searchLower.includes("catálogo") ||
-          searchLower.includes("productos")
-        ) {
-          targetSection = "#catalogo";
-        } else if (
-          searchLower.includes("contacto") ||
-          searchLower.includes("contact")
-        ) {
-          targetSection = "#contacto";
-        } else {
-          targetSection = "#catalogo";
-        }
-      }
-
-      const element = document.querySelector(targetSection);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      setSearchTerm("");
-      setShowDropdown(false);
+  const scrollToSection = useCallback((selector: string) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const handleProductSelect = (product: Product) => {
+  const handleSearch = useCallback(() => {
+    if (!searchTerm.trim()) return;
+
+    const searchLower = searchTerm.toLowerCase();
+    const matchedProduct = products.find((product) =>
+      product.name.toLowerCase().includes(searchLower)
+    );
+
+    if (matchedProduct) {
+      if (matchedProduct.section === "catalogo" && onProductSelect) {
+        onProductSelect(matchedProduct.id);
+        setSearchTerm("");
+        setShowDropdown(false);
+        return;
+      } else if (matchedProduct.section === "catalogo") {
+        scrollToSection("#catalogo");
+      } else if (matchedProduct.section === "gallery") {
+        scrollToSection(".gallery-section");
+      }
+    } else {
+      let targetSection = "#catalogo";
+      
+      if (searchLower.includes("inicio") || searchLower.includes("home")) {
+        targetSection = "#inicio";
+      } else if (searchLower.includes("contacto") || searchLower.includes("contact")) {
+        targetSection = "#contacto";
+      }
+      
+      scrollToSection(targetSection);
+    }
+    
+    setSearchTerm("");
+    setShowDropdown(false);
+  }, [searchTerm, products, onProductSelect, scrollToSection]);
+
+  const handleProductSelect = useCallback((product: Product) => {
     if (product.section === "catalogo" && onProductSelect) {
       onProductSelect(product.id);
     } else {
-      let targetSection = "";
-
-      if (product.section === "catalogo") {
-        targetSection = "#catalogo";
-      } else if (product.section === "gallery") {
-        targetSection = ".gallery-section";
-      }
-
-      const element = document.querySelector(targetSection);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      const targetSection = product.section === "catalogo" ? "#catalogo" : ".gallery-section";
+      scrollToSection(targetSection);
     }
     setSearchTerm("");
     setShowDropdown(false);
-  };
+  }, [onProductSelect, scrollToSection]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSearch();
@@ -2580,7 +2531,77 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
       setShowDropdown(false);
       setSearchTerm("");
     }
-  };
+  }, [handleSearch]);
+
+  const searchDropdown = useMemo(() => {
+    if (!showDropdown) return null;
+    
+    return (
+      <div className="search-dropdown">
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="search-dropdown-item"
+            onClick={() => handleProductSelect(product)}
+          >
+            {product.name}
+          </div>
+        ))}
+      </div>
+    );
+  }, [showDropdown, filteredProducts, handleProductSelect]);
+
+  const searchForm = useMemo(() => (
+    <Form className="search-form col-3 d-none d-lg-block">
+      <InputGroup>
+        <div className="input-group position-relative" ref={dropdownRef}>
+          <i
+            className="bx bx-search search-icon"
+            onClick={handleSearch}
+            style={{ cursor: "pointer", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "")}
+          />
+          <Form.Control
+            type="search"
+            placeholder="Buscar productos o secciones..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          {searchDropdown}
+        </div>
+      </InputGroup>
+    </Form>
+  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
+
+  const mobileSearchForm = useMemo(() => (
+    <div className="d-lg-none mt-3">
+      <Form className="search-form-mobile">
+        <InputGroup>
+          <div className="input-group position-relative" ref={dropdownRef}>
+            <i
+              className="bx bx-search search-icon"
+              onClick={handleSearch}
+              style={{ cursor: "pointer", transition: "color 0.3s ease" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "")}
+            />
+            <Form.Control
+              type="search"
+              placeholder="Buscar productos o secciones..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            {searchDropdown}
+          </div>
+        </InputGroup>
+      </Form>
+    </div>
+  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
 
   return (
     <>
@@ -2606,7 +2627,7 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
             <i
               className="bx bx-menu text-white"
               style={{ fontSize: "1.5rem" }}
-            ></i>
+            />
           </Navbar.Toggle>
 
           <Navbar.Collapse id="basic-navbar-nav">
@@ -2615,108 +2636,27 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
                 href="#inicio"
                 className="nav-button me-lg-3 mb-2 mb-lg-0"
               >
-                <i className="bx bx-home-alt"></i>
+                <i className="bx bx-home-alt" />
                 Inicio
               </Nav.Link>
               <Nav.Link
                 href="#catalogo"
                 className="nav-button me-lg-3 mb-2 mb-lg-0"
               >
-                <i className="bx bx-grid-alt"></i>
+                <i className="bx bx-grid-alt" />
                 Catálogo
               </Nav.Link>
               <Nav.Link href="#contacto" className="nav-button mb-2 mb-lg-0">
-                <i className="bx bx-message-dots"></i>
+                <i className="bx bx-message-dots" />
                 Contacto
               </Nav.Link>
 
-              <div className="d-lg-none mt-3">
-                <Form className="search-form-mobile">
-                  <InputGroup>
-                    <div
-                      className="input-group position-relative"
-                      ref={dropdownRef}
-                    >
-                      <i
-                        className="bx bx-search search-icon"
-                        onClick={handleSearch}
-                        style={{
-                          cursor: "pointer",
-                          transition: "color 0.3s ease",
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.color = "#77bb54")
-                        }
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                      ></i>
-                      <Form.Control
-                        type="search"
-                        placeholder="Buscar productos o secciones..."
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                      />
-                      {showDropdown && (
-                        <div className="search-dropdown">
-                          {filteredProducts.map((product) => (
-                            <div
-                              key={product.id}
-                              className="search-dropdown-item"
-                              onClick={() => handleProductSelect(product)}
-                            >
-                              {product.name}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </InputGroup>
-                </Form>
-              </div>
+              {mobileSearchForm}
             </Nav>
           </Navbar.Collapse>
 
-          <Form className="search-form col-3 d-none d-lg-block">
-            <InputGroup>
-              <div className="input-group position-relative" ref={dropdownRef}>
-                <i
-                  className="bx bx-search search-icon"
-                  onClick={handleSearch}
-                  style={{
-                    cursor: "pointer",
-                    transition: "color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#77bb54")
-                  }
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                ></i>
-                <Form.Control
-                  type="search"
-                  placeholder="Buscar productos o secciones..."
-                  className="search-input"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-                {showDropdown && (
-                  <div className="search-dropdown">
-                    {filteredProducts.map((product) => (
-                      <div
-                        key={product.id}
-                        className="search-dropdown-item"
-                        onClick={() => handleProductSelect(product)}
-                      >
-                        {product.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </InputGroup>
-          </Form>
-          <div className=" col-4 transparent-div"></div>
+          {searchForm}
+          <div className="col-4 transparent-div" />
         </div>
       </Navbar>
     </>
@@ -2724,10 +2664,9 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
 };
 
 export default Header;
-
 ```
 
-## src/components/HeroSection.css
+## src\components\HeroSection.css
 
 ```
 .hero-section {
@@ -2741,20 +2680,9 @@ export default Header;
 
 .pattern-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(
-      circle at 25% 25%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 75% 75%,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px
-    );
+  inset: 0;
+  background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
   background-size: 50px 50px;
   z-index: 1;
 }
@@ -2787,21 +2715,21 @@ export default Header;
 }
 
 .logo-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: bold;
   letter-spacing: 2px;
   margin-bottom: -5px;
 }
 
 .logo-subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 300;
   letter-spacing: 4px;
   opacity: 0.9;
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 6vw, 3rem);
   font-weight: bold;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
@@ -2809,7 +2737,7 @@ export default Header;
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -2858,43 +2786,19 @@ export default Header;
 }
 
 .instagram-button:hover {
-  background: linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   border-color: #e1306c;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-
-  .logo-title {
-    font-size: 2rem;
-  }
-
   .logo-container {
     margin-top: 2rem !important;
     margin-bottom: 0rem !important;
   }
 
-  .logo-circle {
+  .logo-image {
     width: 200px;
     height: 200px;
-  }
-
-  .logo-image {
-    width: 180px;
-    height: 180px;
   }
 
   .content-container {
@@ -2911,35 +2815,30 @@ export default Header;
     max-width: 250px;
   }
 }
-
 ```
 
-## src/components/HeroSection.tsx
+## src\components\HeroSection.tsx
 
 ```
-import React from "react";
+import React, { useCallback } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./HeroSection.css";
 import "./animations.css";
 
 const HeroSection = () => {
-  const handleCatalogClick = () => {
-    const element = document.querySelector("#catalogo");
+  const scrollToSection = useCallback((selector: string) => {
+    const element = document.querySelector(selector);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const handleShippingClick = () => {
-    const element = document.querySelector("#contacto");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleInstagramClick = () => {
+  const handleCatalogClick = useCallback(() => scrollToSection("#catalogo"), [scrollToSection]);
+  const handleShippingClick = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
+  
+  const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
-  };
+  }, []);
 
   return (
     <Container fluid className="hero-section" id="inicio">
@@ -2974,7 +2873,7 @@ const HeroSection = () => {
                   className="hero-button primary-button me-2 me-md-3 mb-2 mb-md-0"
                   onClick={handleCatalogClick}
                 >
-                  <i className="bx bx-grid-alt"></i>
+                  <i className="bx bx-grid-alt" />
                   Ver catálogo
                 </Button>
                 <Button
@@ -2983,7 +2882,7 @@ const HeroSection = () => {
                   className="hero-button secondary-button me-2 me-md-3 mb-2 mb-md-0"
                   onClick={handleShippingClick}
                 >
-                  <i className="bx bx-package"></i>
+                  <i className="bx bx-package" />
                   Envíos
                 </Button>
                 <Button
@@ -2992,7 +2891,7 @@ const HeroSection = () => {
                   className="hero-button instagram-button"
                   onClick={handleInstagramClick}
                 >
-                  <i className="bx bxl-instagram"></i>
+                  <i className="bx bxl-instagram" />
                   Instagram
                 </Button>
               </div>
@@ -3005,83 +2904,9 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
 ```
 
-## src/components/animations.css
-
-```
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-logo {
-  animation: fadeInScale 1.2s ease-out 0.6s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-title {
-  animation: fadeInUp 1.2s ease-out 0.7s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-subtitle {
-  animation: fadeInUp 1.2s ease-out 0.7s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.animate-buttons {
-  animation: fadeInScale 1.2s ease-out 0.8s;
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-logo,
-  .animate-title,
-  .animate-subtitle,
-  .animate-buttons {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-
-```
-
-## src/index.css
+## src\index.css
 
 ```
 body {
@@ -3094,7 +2919,7 @@ body {
 
 ```
 
-## src/index.tsx
+## src\index.tsx
 
 ```
 import React from "react";
@@ -3111,14 +2936,14 @@ root.render(
 
 ```
 
-## src/react-app-env.d.ts
+## src\react-app-env.d.ts
 
 ```
 /// <reference types="react-scripts" />
 
 ```
 
-## src/reportWebVitals.ts
+## src\reportWebVitals.ts
 
 ```
 import { ReportHandler } from 'web-vitals';
@@ -3139,7 +2964,7 @@ export default reportWebVitals;
 
 ```
 
-## src/setupTests.ts
+## src\setupTests.ts
 
 ```
 // jest-dom adds custom jest matchers for asserting on DOM nodes.

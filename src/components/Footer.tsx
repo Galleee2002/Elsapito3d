@@ -42,7 +42,7 @@ const Footer = () => {
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-card">
               <h4 className="footer-title">
-                <i className="bxl-instagram" />
+                <i className="bx  bx-cart"></i>
                 Hace tu pedido
               </h4>
               <div className="footer-text">
@@ -50,7 +50,8 @@ const Footer = () => {
                 <ol className="footer-list">
                   <li> 1 - Elegí el producto que te guste del catálogo.</li>
                   <li>
-                    2 - Seleccioná la cantidad que querés y el color disponible.
+                    2 - Tené en cuenta la cantidad que querés y el color
+                    disponible.
                   </li>
                   <li>
                     3 - Una vez elegido, escribinos por mensaje privado en

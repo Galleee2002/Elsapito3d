@@ -14,7 +14,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background: url("/public/background.jpg") center/cover fixed no-repeat;
+  background: url("/public/img/background.jpg") center/cover fixed no-repeat;
   position: relative;
   padding-top: 70px;
 }
