@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { Navbar, Nav, Form, InputGroup } from "react-bootstrap";
 import "./Header.css";
 
@@ -10,26 +16,52 @@ interface Product {
 
 interface HeaderProps {
   onProductSelect?: (productId: number) => void;
+  onSearch?: (searchTerm: string) => void; // Nueva prop para manejar búsquedas
 }
 
-const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
+const Header: React.FC<HeaderProps> = ({ onProductSelect, onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Cargar productos desde el JSON
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch("/products.json");
+        if (!response.ok) {
+          throw new Error(`Error al cargar productos: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // Convertir los productos del JSON al formato esperado
+        const formattedProducts = data.map((product: any) => ({
+          id: product.id,
+          name: product.name,
+          section: "catalogo",
+        }));
+
+        setAllProducts(formattedProducts);
+      } catch (err) {
+        console.error("Error loading products:", err);
+      }
+    };
+    loadProducts();
+  }, []);
 
   const products: Product[] = useMemo(
     () => [
-      { id: 1, name: "Tarjetero para reja", section: "catalogo" },
-      { id: 2, name: "Expositor encastrable", section: "catalogo" },
-      { id: 3, name: "Calesita giratoria expositora", section: "catalogo" },
-      { id: 4, name: "Trabajos de Precisión", section: "gallery" },
-      { id: 5, name: "Diseños Únicos", section: "gallery" },
-      { id: 6, name: "Materiales Premium", section: "gallery" },
-      { id: 7, name: "Entregas Rápidas", section: "gallery" },
-      { id: 8, name: "Satisfacción Garantizada", section: "gallery" },
+      ...allProducts, // Productos del JSON
+      // Mantener las secciones existentes
+      { id: 1001, name: "Trabajos de Precisión", section: "gallery" },
+      { id: 1002, name: "Diseños Únicos", section: "gallery" },
+      { id: 1003, name: "Materiales Premium", section: "gallery" },
+      { id: 1004, name: "Entregas Rápidas", section: "gallery" },
+      { id: 1005, name: "Satisfacción Garantizada", section: "gallery" },
     ],
-    []
+    [allProducts]
   );
 
   useEffect(() => {
@@ -75,56 +107,80 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
     );
 
     if (matchedProduct) {
-      if (matchedProduct.section === "catalogo" && onProductSelect) {
-        onProductSelect(matchedProduct.id);
-        setSearchTerm("");
-        setShowDropdown(false);
-        return;
-      } else if (matchedProduct.section === "catalogo") {
+      if (matchedProduct.section === "catalogo") {
+        // Si es un producto del catálogo, hacer scroll y filtrar
         scrollToSection("#catalogo");
+        if (onSearch) {
+          onSearch(searchTerm); // Enviar término de búsqueda al componente padre
+        }
+        if (onProductSelect) {
+          onProductSelect(matchedProduct.id);
+        }
       } else if (matchedProduct.section === "gallery") {
         scrollToSection(".gallery-section");
       }
     } else {
+      // Si no encuentra un producto específico, buscar en el catálogo
       let targetSection = "#catalogo";
-      
+
       if (searchLower.includes("inicio") || searchLower.includes("home")) {
         targetSection = "#inicio";
-      } else if (searchLower.includes("contacto") || searchLower.includes("contact")) {
+      } else if (
+        searchLower.includes("contacto") ||
+        searchLower.includes("contact")
+      ) {
         targetSection = "#contacto";
+      } else {
+        // Por defecto, buscar en el catálogo
+        if (onSearch) {
+          onSearch(searchTerm);
+        }
       }
-      
+
       scrollToSection(targetSection);
     }
-    
+
     setSearchTerm("");
     setShowDropdown(false);
-  }, [searchTerm, products, onProductSelect, scrollToSection]);
+  }, [searchTerm, products, onProductSelect, onSearch, scrollToSection]);
 
-  const handleProductSelect = useCallback((product: Product) => {
-    if (product.section === "catalogo" && onProductSelect) {
-      onProductSelect(product.id);
-    } else {
-      const targetSection = product.section === "catalogo" ? "#catalogo" : ".gallery-section";
-      scrollToSection(targetSection);
-    }
-    setSearchTerm("");
-    setShowDropdown(false);
-  }, [onProductSelect, scrollToSection]);
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    } else if (e.key === "Escape") {
-      setShowDropdown(false);
+  const handleProductSelect = useCallback(
+    (product: Product) => {
+      if (product.section === "catalogo") {
+        scrollToSection("#catalogo");
+        if (onSearch) {
+          onSearch(product.name); // Filtrar por el nombre del producto
+        }
+        if (onProductSelect) {
+          onProductSelect(product.id);
+        }
+      } else {
+        const targetSection =
+          product.section === "catalogo" ? "#catalogo" : ".gallery-section";
+        scrollToSection(targetSection);
+      }
       setSearchTerm("");
-    }
-  }, [handleSearch]);
+      setShowDropdown(false);
+    },
+    [onProductSelect, onSearch, scrollToSection]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSearch();
+      } else if (e.key === "Escape") {
+        setShowDropdown(false);
+        setSearchTerm("");
+      }
+    },
+    [handleSearch]
+  );
 
   const searchDropdown = useMemo(() => {
     if (!showDropdown) return null;
-    
+
     return (
       <div className="search-dropdown">
         {filteredProducts.map((product) => (
@@ -134,40 +190,18 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
             onClick={() => handleProductSelect(product)}
           >
             {product.name}
+            <span className="product-section">
+              {product.section === "catalogo" ? "Catálogo" : "Galería"}
+            </span>
           </div>
         ))}
       </div>
     );
   }, [showDropdown, filteredProducts, handleProductSelect]);
 
-  const searchForm = useMemo(() => (
-    <Form className="search-form col-3 d-none d-lg-block">
-      <InputGroup>
-        <div className="input-group position-relative" ref={dropdownRef}>
-          <i
-            className="bx bx-search search-icon"
-            onClick={handleSearch}
-            style={{ cursor: "pointer", transition: "color 0.3s ease" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-          />
-          <Form.Control
-            type="search"
-            placeholder="Buscar productos o secciones..."
-            className="search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          {searchDropdown}
-        </div>
-      </InputGroup>
-    </Form>
-  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
-
-  const mobileSearchForm = useMemo(() => (
-    <div className="d-lg-none mt-3">
-      <Form className="search-form-mobile">
+  const searchForm = useMemo(
+    () => (
+      <Form className="search-form col-3 d-none d-lg-block">
         <InputGroup>
           <div className="input-group position-relative" ref={dropdownRef}>
             <i
@@ -189,8 +223,39 @@ const Header: React.FC<HeaderProps> = ({ onProductSelect }) => {
           </div>
         </InputGroup>
       </Form>
-    </div>
-  ), [searchTerm, handleKeyDown, handleSearch, searchDropdown]);
+    ),
+    [searchTerm, handleKeyDown, handleSearch, searchDropdown]
+  );
+
+  const mobileSearchForm = useMemo(
+    () => (
+      <div className="d-lg-none mt-3">
+        <Form className="search-form-mobile">
+          <InputGroup>
+            <div className="input-group position-relative" ref={dropdownRef}>
+              <i
+                className="bx bx-search search-icon"
+                onClick={handleSearch}
+                style={{ cursor: "pointer", transition: "color 0.3s ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#77bb54")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "")}
+              />
+              <Form.Control
+                type="search"
+                placeholder="Buscar productos o secciones..."
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              {searchDropdown}
+            </div>
+          </InputGroup>
+        </Form>
+      </div>
+    ),
+    [searchTerm, handleKeyDown, handleSearch, searchDropdown]
+  );
 
   return (
     <>

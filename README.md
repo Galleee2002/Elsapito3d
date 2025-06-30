@@ -19,7 +19,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background: url("/public/background.jpg") center/cover fixed no-repeat;
+  background: url("/public/img/background.jpg") center/cover fixed no-repeat;
   position: relative;
   padding-top: 70px;
 }
@@ -54,6 +54,7 @@ body {
     background-attachment: scroll;
   }
 }
+
 ```
 
 ## src\App.test.tsx
@@ -345,6 +346,19 @@ export default App;
   color: #000000b3;
 }
 
+.video-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  backdrop-filter: blur(10px);
+  z-index: 3;
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -431,13 +445,19 @@ export default App;
   justify-content: center;
 }
 
-.modal-image {
+.modal-media {
   width: 100%;
   height: 600px;
   object-fit: cover;
   border-radius: 15px;
   transition: opacity 0.3s ease;
   cursor: zoom-in;
+}
+
+.modal-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fullscreen-overlay {
@@ -476,7 +496,7 @@ export default App;
   transform: scale(1.1);
 }
 
-.fullscreen-image {
+.fullscreen-media {
   max-width: 95vw;
   max-height: 95vh;
   object-fit: contain;
@@ -592,6 +612,34 @@ export default App;
   object-fit: cover;
 }
 
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
 .modal-info {
   display: flex;
   flex-direction: column;
@@ -610,6 +658,15 @@ export default App;
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   line-height: 1.6;
   margin: 0;
+}
+
+.description-line {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.description-line:last-child {
+  margin-bottom: 0;
 }
 
 .modal-details {
@@ -717,7 +774,7 @@ export default App;
     max-height: 95vh;
   }
 
-  .modal-image {
+  .modal-media {
     height: 250px;
   }
 
@@ -748,6 +805,24 @@ export default App;
   .thumbnail {
     width: 35px;
     height: 35px;
+  }
+
+  .description-line {
+    margin-bottom: 0.4rem;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+  }
+
+  .video-badge {
+    top: 10px;
+    right: 10px;
+    padding: 6px;
+    font-size: 1.2rem;
+  }
+
+  .play-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
   }
 }
 
@@ -787,7 +862,7 @@ export default App;
     font-size: 1.5rem;
   }
 
-  .modal-image {
+  .modal-media {
     height: 200px;
   }
 
@@ -844,9 +919,27 @@ export default App;
     font-size: 1.5rem;
   }
 
-  .fullscreen-image {
+  .fullscreen-media {
     max-width: 98vw;
     max-height: 98vh;
+  }
+
+  .description-line {
+    margin-bottom: 0.3rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+
+  .video-badge {
+    top: 8px;
+    right: 8px;
+    padding: 5px;
+    font-size: 1rem;
+  }
+
+  .play-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 0.6rem;
   }
 }
 
@@ -872,6 +965,11 @@ export default App;
     width: 25px;
     height: 25px;
   }
+
+  .description-line {
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -887,7 +985,7 @@ export default App;
   .modal-overlay,
   .modal-content,
   .fullscreen-overlay,
-  .fullscreen-image {
+  .fullscreen-media {
     animation: none;
   }
 
@@ -913,11 +1011,17 @@ import React, {
 } from "react";
 import "./Catalog.css";
 
+interface MediaItem {
+  type: "image" | "video";
+  src: string;
+  thumbnail?: string;
+}
+
 interface Product {
   id: number;
   name: string;
   description: string;
-  images: string[];
+  media: MediaItem[];
   price: string;
   details: {
     materials: string[];
@@ -935,21 +1039,22 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const response = await fetch('/products.json');
+        const response = await fetch("/products.json");
         if (!response.ok) {
           throw new Error(`Error al cargar productos: ${response.status}`);
         }
         const data: Product[] = await response.json();
         setProducts(data);
       } catch (err) {
-        console.error('Error loading products:', err);
+        console.error("Error loading products:", err);
       }
     };
     loadProducts();
@@ -963,6 +1068,32 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
       }
     },
   }));
+
+  const formatDescription = useCallback((description: string) => {
+    const lines = description.split("\n").filter((line) => line.trim() !== "");
+    return lines.map((line, index) => (
+      <div key={index} className="description-line">
+        {line.trim()}
+      </div>
+    ));
+  }, []);
+
+  const truncateDescription = useCallback(
+    (description: string, maxLength: number = 80) => {
+      const firstLine = description.split("\n")[0];
+      if (firstLine.length <= maxLength) return firstLine;
+      return firstLine.substring(0, maxLength) + "...";
+    },
+    []
+  );
+
+  const getFirstImage = useCallback((media: MediaItem[]) => {
+    const firstImage = media.find((item) => item.type === "image");
+    if (firstImage) return firstImage.src;
+
+    const firstVideo = media.find((item) => item.type === "video");
+    return firstVideo?.thumbnail || "";
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1004,33 +1135,39 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
     };
   }, [isModalOpen]);
 
-  const nextImage = useCallback(() => {
-    if (selectedProduct && currentImageIndex < selectedProduct.images.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
+  const nextMedia = useCallback(() => {
+    if (
+      selectedProduct &&
+      currentMediaIndex < selectedProduct.media.length - 1
+    ) {
+      setCurrentMediaIndex(currentMediaIndex + 1);
     }
-  }, [selectedProduct, currentImageIndex]);
+  }, [selectedProduct, currentMediaIndex]);
 
-  const prevImage = useCallback(() => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
+  const prevMedia = useCallback(() => {
+    if (currentMediaIndex > 0) {
+      setCurrentMediaIndex(currentMediaIndex - 1);
     }
-  }, [currentImageIndex]);
+  }, [currentMediaIndex]);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProduct(null);
-    setCurrentImageIndex(0);
+    setCurrentMediaIndex(0);
     setIsFullscreen(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
   }, []);
 
   const openModal = useCallback((product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
-    setCurrentImageIndex(0);
+    setCurrentMediaIndex(0);
   }, []);
 
-  const goToImage = useCallback((index: number) => {
-    setCurrentImageIndex(index);
+  const goToMedia = useCallback((index: number) => {
+    setCurrentMediaIndex(index);
   }, []);
 
   const openFullscreen = useCallback(() => {
@@ -1039,29 +1176,44 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
 
   const closeFullscreen = useCallback(() => {
     setIsFullscreen(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
   }, []);
 
-  const handleModalClick = useCallback((event: React.MouseEvent) => {
-    if (event.target === event.currentTarget) {
-      closeModal();
-    }
-  }, [closeModal]);
-
-  const scrollToSection = useCallback((selector: string) => {
-    closeModal();
-    setTimeout(() => {
-      const element = document.querySelector(selector);
-      if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+  const handleModalClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (event.target === event.currentTarget) {
+        closeModal();
       }
-    }, 100);
-  }, [closeModal]);
+    },
+    [closeModal]
+  );
 
-  const scrollToGallery = useCallback(() => scrollToSection(".gallery-section"), [scrollToSection]);
-  const scrollToFooter = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
+  const scrollToSection = useCallback(
+    (selector: string) => {
+      closeModal();
+      setTimeout(() => {
+        const element = document.querySelector(selector);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 100);
+    },
+    [closeModal]
+  );
+
+  const scrollToGallery = useCallback(
+    () => scrollToSection(".gallery-section"),
+    [scrollToSection]
+  );
+  const scrollToFooter = useCallback(
+    () => scrollToSection("#contacto"),
+    [scrollToSection]
+  );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -1073,19 +1225,61 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
         }
       } else if (isModalOpen && !isFullscreen && selectedProduct) {
         if (event.key === "ArrowRight") {
-          nextImage();
+          nextMedia();
         } else if (event.key === "ArrowLeft") {
-          prevImage();
+          prevMedia();
         }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen, selectedProduct, currentImageIndex, isFullscreen, nextImage, prevImage, closeModal]);
+  }, [
+    isModalOpen,
+    selectedProduct,
+    currentMediaIndex,
+    isFullscreen,
+    nextMedia,
+    prevMedia,
+    closeModal,
+  ]);
+
+  const renderMedia = useCallback(
+    (mediaItem: MediaItem, isModal: boolean = false) => {
+      if (mediaItem.type === "video") {
+        return (
+          <video
+            ref={isModal ? videoRef : undefined}
+            className={isModal ? "modal-media" : "product-image"}
+            controls
+            muted
+            onClick={isModal ? openFullscreen : undefined}
+            style={{ cursor: isModal ? "zoom-in" : "default" }}
+          >
+            <source src={mediaItem.src} type="video/mp4" />
+            Tu navegador no soporta videos HTML5.
+          </video>
+        );
+      } else {
+        return (
+          <img
+            src={mediaItem.src}
+            alt="Producto"
+            className={isModal ? "modal-media" : "product-image"}
+            onClick={isModal ? openFullscreen : undefined}
+            style={{ cursor: isModal ? "zoom-in" : "default" }}
+            loading="lazy"
+          />
+        );
+      }
+    },
+    [openFullscreen]
+  );
 
   const modalContent = useMemo(() => {
     if (!isModalOpen || !selectedProduct) return null;
+
+    const currentMedia = selectedProduct.media[currentMediaIndex];
 
     return (
       <div className="modal-overlay" onClick={handleModalClick} tabIndex={-1}>
@@ -1095,45 +1289,63 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
           </button>
 
           <div className="modal-image-container">
-            <img
-              src={selectedProduct.images[currentImageIndex]}
-              alt={`${selectedProduct.name} - Imagen ${currentImageIndex + 1}`}
-              className="modal-image"
-              onClick={openFullscreen}
-            />
+            {renderMedia(currentMedia, true)}
 
-            {selectedProduct.images.length > 1 && (
+            {selectedProduct.media.length > 1 && (
               <>
                 <button
-                  className={`nav-arrow nav-arrow-left ${currentImageIndex === 0 ? "disabled" : ""}`}
-                  onClick={prevImage}
-                  disabled={currentImageIndex === 0}
+                  className={`nav-arrow nav-arrow-left ${
+                    currentMediaIndex === 0 ? "disabled" : ""
+                  }`}
+                  onClick={prevMedia}
+                  disabled={currentMediaIndex === 0}
                 >
                   ←
                 </button>
 
                 <button
                   className={`nav-arrow nav-arrow-right ${
-                    currentImageIndex === selectedProduct.images.length - 1 ? "disabled" : ""
+                    currentMediaIndex === selectedProduct.media.length - 1
+                      ? "disabled"
+                      : ""
                   }`}
-                  onClick={nextImage}
-                  disabled={currentImageIndex === selectedProduct.images.length - 1}
+                  onClick={nextMedia}
+                  disabled={
+                    currentMediaIndex === selectedProduct.media.length - 1
+                  }
                 >
                   →
                 </button>
 
                 <div className="image-counter">
-                  {currentImageIndex + 1} / {selectedProduct.images.length}
+                  {currentMediaIndex + 1} / {selectedProduct.media.length}
                 </div>
 
                 <div className="image-thumbnails">
-                  {selectedProduct.images.map((image, index) => (
+                  {selectedProduct.media.map((mediaItem, index) => (
                     <button
                       key={index}
-                      className={`thumbnail ${index === currentImageIndex ? "active" : ""}`}
-                      onClick={() => goToImage(index)}
+                      className={`thumbnail ${
+                        index === currentMediaIndex ? "active" : ""
+                      }`}
+                      onClick={() => goToMedia(index)}
                     >
-                      <img src={image} alt={`Miniatura ${index + 1}`} />
+                      {mediaItem.type === "video" ? (
+                        <div className="video-thumbnail">
+                          <img
+                            src={mediaItem.thumbnail || mediaItem.src}
+                            alt={`Miniatura video ${index + 1}`}
+                          />
+                          <div className="play-icon">
+                            <i className="bx bx-play"></i>
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={mediaItem.src}
+                          alt={`Miniatura ${index + 1}`}
+                        />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -1143,28 +1355,40 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
 
           <div className="modal-info">
             <h3 className="modal-title">{selectedProduct.name}</h3>
-            <p className="modal-description">{selectedProduct.description}</p>
+            <div className="modal-description">
+              {formatDescription(selectedProduct.description)}
+            </div>
 
             <div className="modal-details">
               <div className="detail-row">
                 <span className="detail-label">Precio:</span>
-                <span className="detail-value price">{selectedProduct.price}</span>
+                <span className="detail-value price">
+                  {selectedProduct.price}
+                </span>
               </div>
               <div className="detail-row">
                 <span className="detail-label">Promo:</span>
-                <span className="detail-value">{selectedProduct.details.promotion}</span>
+                <span className="detail-value">
+                  {selectedProduct.details.promotion}
+                </span>
               </div>
               <div className="detail-row">
                 <span className="detail-label">Materiales:</span>
-                <span className="detail-value">{selectedProduct.details.materials.join(", ")}</span>
+                <span className="detail-value">
+                  {selectedProduct.details.materials.join(", ")}
+                </span>
               </div>
               <div className="detail-row">
                 <span className="detail-label">Dimensiones:</span>
-                <span className="detail-value">{selectedProduct.details.dimensions}</span>
+                <span className="detail-value">
+                  {selectedProduct.details.dimensions}
+                </span>
               </div>
               <div className="detail-row">
                 <span className="detail-label">Demora:</span>
-                <span className="detail-value">{selectedProduct.details.printTime}</span>
+                <span className="detail-value">
+                  {selectedProduct.details.printTime}
+                </span>
               </div>
             </div>
 
@@ -1180,24 +1404,46 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
         </div>
       </div>
     );
-  }, [isModalOpen, selectedProduct, currentImageIndex, handleModalClick, closeModal, openFullscreen, prevImage, nextImage, goToImage, scrollToGallery, scrollToFooter]);
+  }, [
+    isModalOpen,
+    selectedProduct,
+    currentMediaIndex,
+    handleModalClick,
+    closeModal,
+    renderMedia,
+    prevMedia,
+    nextMedia,
+    goToMedia,
+    scrollToGallery,
+    scrollToFooter,
+    formatDescription,
+  ]);
 
   const fullscreenContent = useMemo(() => {
     if (!isFullscreen || !selectedProduct) return null;
+
+    const currentMedia = selectedProduct.media[currentMediaIndex];
 
     return (
       <div className="fullscreen-overlay" onClick={closeFullscreen}>
         <button className="fullscreen-close" onClick={closeFullscreen}>
           ×
         </button>
-        <img
-          src={selectedProduct.images[currentImageIndex]}
-          alt={`${selectedProduct.name} - Pantalla completa`}
-          className="fullscreen-image"
-        />
+        {currentMedia.type === "video" ? (
+          <video className="fullscreen-media" controls autoPlay muted>
+            <source src={currentMedia.src} type="video/mp4" />
+            Tu navegador no soporta videos HTML5.
+          </video>
+        ) : (
+          <img
+            src={currentMedia.src}
+            alt={`${selectedProduct.name} - Pantalla completa`}
+            className="fullscreen-media"
+          />
+        )}
       </div>
     );
-  }, [isFullscreen, selectedProduct, currentImageIndex, closeFullscreen]);
+  }, [isFullscreen, selectedProduct, currentMediaIndex, closeFullscreen]);
 
   return (
     <section id="catalogo" className="catalog-section">
@@ -1221,7 +1467,7 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
               <div className="product-card" onClick={() => openModal(product)}>
                 <div className="product-image-container">
                   <img
-                    src={product.images[0]}
+                    src={getFirstImage(product.media)}
                     className="product-image"
                     alt={product.name}
                     loading="lazy"
@@ -1229,11 +1475,18 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
                   <div className="image-overlay">
                     <span className="view-details">Ver detalles</span>
                   </div>
+                  {product.media.some((item) => item.type === "video") && (
+                    <div className="video-badge">
+                      <i className="bx bx-play-circle"></i>
+                    </div>
+                  )}
                 </div>
 
                 <div className="product-body">
                   <h3 className="product-title">{product.name}</h3>
-                  <p className="product-description">{product.description}</p>
+                  <p className="product-description">
+                    {truncateDescription(product.description)}
+                  </p>
 
                   <div className="product-footer">
                     <span className="product-price">{product.price}</span>
@@ -1252,6 +1505,7 @@ const Catalog = forwardRef<CatalogRef>((props, ref) => {
 });
 
 export default Catalog;
+
 ```
 
 ## src\components\Footer.css
@@ -2833,9 +3087,15 @@ const HeroSection = () => {
     }
   }, []);
 
-  const handleCatalogClick = useCallback(() => scrollToSection("#catalogo"), [scrollToSection]);
-  const handleShippingClick = useCallback(() => scrollToSection("#contacto"), [scrollToSection]);
-  
+  const handleCatalogClick = useCallback(
+    () => scrollToSection("#catalogo"),
+    [scrollToSection]
+  );
+  const handleShippingClick = useCallback(
+    () => scrollToSection("#contacto"),
+    [scrollToSection]
+  );
+
   const handleInstagramClick = useCallback(() => {
     window.open("https://www.instagram.com/elsapito.3d", "_blank");
   }, []);
@@ -2848,7 +3108,7 @@ const HeroSection = () => {
             <div className="logo-container animate-logo">
               <div className="logo-circle">
                 <img
-                  src="/logo.png"
+                  src="/img/logo.png"
                   alt="El Sapito 3D Logo"
                   className="logo-image"
                 />
@@ -2904,6 +3164,7 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
 ```
 
 ## src\index.css

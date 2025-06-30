@@ -10,8 +10,16 @@
 .pattern-overlay {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
-    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+  background-image: radial-gradient(
+      circle at 25% 25%,
+      rgba(241, 196, 15, 0.1) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(231, 76, 60, 0.1) 2px,
+      transparent 2px
+    );
   background-size: 50px 50px;
   z-index: 1;
 }
@@ -32,6 +40,7 @@
   width: 280px;
   height: 280px;
   object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
 
 .content-container {
@@ -55,21 +64,24 @@
   font-weight: 300;
   letter-spacing: 4px;
   opacity: 0.9;
+  color: #f1c40f;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .hero-title {
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: bold;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
   margin-bottom: 1rem !important;
 }
 
 .hero-subtitle {
   font-size: clamp(1.1rem, 3vw, 1.3rem);
-  color: rgba(255, 255, 255, 0.9);
+  color: #ecf0f1;
   line-height: 1.6;
   margin-bottom: 2rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .button-group {
@@ -94,29 +106,62 @@
   text-decoration: none;
   min-width: 160px;
   justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .hero-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   color: white;
   border-color: white;
 }
 
-.primary-button:hover {
-  background-color: rgba(119, 187, 84, 0.8);
+.primary-button {
+  background: linear-gradient(135deg, #77bb54 0%, #5fa83c 100%);
   border-color: #77bb54;
 }
 
-.secondary-button:hover {
-  background-color: rgba(52, 152, 219, 0.8);
+.primary-button:hover {
+  background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+  border-color: #f1c40f;
+  color: #2c3e50;
+  box-shadow: 0 8px 25px rgba(241, 196, 15, 0.4);
+}
+
+.secondary-button {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
   border-color: #3498db;
 }
 
-.instagram-button:hover {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+.secondary-button:hover {
+  background: linear-gradient(135deg, #e89bd0 0%, rgba(220, 67, 231, 0.7) 100%);
+  border-color: #e89bd0;
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+}
+
+.instagram-button {
+  background: linear-gradient(
+    45deg,
+    rgba(240, 148, 51, 0.8) 0%,
+    rgba(230, 104, 60, 0.8) 25%,
+    rgba(220, 39, 67, 0.8) 50%,
+    rgba(204, 35, 102, 0.8) 75%,
+    rgba(188, 24, 136, 0.8) 100%
+  );
   border-color: #e1306c;
+}
+
+.instagram-button:hover {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  border-color: #e1306c;
+  box-shadow: 0 8px 25px rgba(225, 48, 108, 0.4);
 }
 
 @media (max-width: 768px) {

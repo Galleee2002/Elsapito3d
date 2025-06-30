@@ -54,8 +54,8 @@
     ],
     "price": "$10000",
     "details": {
-      "materials": ["PLA", "ABS"],
-      "dimensions": "20cm x 15cm x 12cm",
+      "materials": ["PLA+"],
+      "dimensions": "20cm x 20cm x 10cm",
       "printTime": "10-15 días",
       "promotion": "A partir de tres unidades $8500 c/u"
     }
@@ -100,7 +100,7 @@
     "price": "$6500",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "12cm x 8cm x 15cm",
+      "dimensions": "10cm x 8cm x 12cm",
       "printTime": "10-15 días",
       "promotion": "A partir de tres unidades $5000 c/u"
     }
@@ -135,7 +135,7 @@
     "price": "$7500",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "25cm x 15cm x 8cm",
+      "dimensions": "Varias",
       "printTime": "10-15 días",
       "promotion": "A partir de tres unidades $6000 c/u"
     }
@@ -158,7 +158,7 @@
     "price": "5u x $3000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "14cm x 14cm x 16cm",
+      "dimensions": "-",
       "printTime": "10-15 días",
       "promotion": "-"
     }
@@ -185,7 +185,7 @@
     "price": "$20000 - $30000 - $40000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "20cm x 20cm x 35cm",
+      "dimensions": "Varias",
       "printTime": "15-20 días",
       "promotion": "Promo 1 - $20000 - Promo 2 - $30000 - Promo 3 - $40000"
     }
@@ -216,7 +216,7 @@
     "price": "$25000 - $40000 - $50000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "20cm x 20cm x 35cm",
+      "dimensions": "Varias",
       "printTime": "15-20 días",
       "promotion": "Promo 1 - $25000 - Promo 2 - $40000 - Promo 3 - $50000"
     }
@@ -247,7 +247,7 @@
     "price": "$30000 - $55000 - $65000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "20cm x 20cm x 35cm",
+      "dimensions": "Varias",
       "printTime": "15-20 días",
       "promotion": "Promo 1 - $30000 - Promo 2 - $55000 - Promo 3 - $65000"
     }
@@ -255,36 +255,344 @@
   {
     "id": 10,
     "name": "Ruleta de la fortuna",
-    "description": "",
+    "description": "Ideal para juegos, sorteos o decisiones rápidas. Cuenta con 8 divisiones y una flecha giratoria en la parte superior. Incluye un compartimento trasero tipo cajón para guardar premios, papeles u otros pequeños objetos. Compacta y liviana, perfecta para usar en casa, eventos o ferias.",
     "media": [
       {
         "type": "video",
         "src": "/videos/videoruleta.mp4",
-        "thumbnail": "/img/cincoescalones.jpg"
+        "thumbnail": "/img/ruletafortuna.jpg"
       },
       {
         "type": "image",
-        "src": "/img/cincoescalones.jpg"
+        "src": "/img/ruletafortuna2.jpg"
       },
       {
         "type": "image",
-        "src": "/img/cincoescalones2.jpg"
-      },
-      {
-        "type": "image",
-        "src": "/img/cincoescalones3.jpg"
-      },
-      {
-        "type": "image",
-        "src": "/img/cincoescalones4.jpg"
+        "src": "/img/ruletafortuna3.jpg"
       }
     ],
-    "price": "$30000 - $55000 - $65000",
+    "price": "$18000 - $22000",
     "details": {
       "materials": ["PLA+"],
-      "dimensions": "20cm x 20cm x 35cm",
-      "printTime": "15-20 días",
-      "promotion": "Promo 1 - $30000 - Promo 2 - $55000 - Promo 3 - $65000"
+      "dimensions": "20cm x 30cm x 12cm",
+      "printTime": "10-15 días",
+      "promotion": "Promo 1 : sin cajón - $18000 - Promo 2 : con cajón - $22000"
+    }
+  },
+  {
+    "id": 11,
+    "name": "Expositor de Pines",
+    "description": "Organizador de pines con diseño de panal, ideal para exhibir colecciones de forma ordenada y estética. Su estructura liviana y resistente permite sostener múltiples pines sin doblarse. Perfecto para decorar escritorios, estanterías o stands.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/pines1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/pines2.jpg"
+      }
+    ],
+    "price": "$7500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "20cm x 20cm x 5cm",
+      "printTime": "10-15 días",
+      "promotion": "A partir de tres unidades $6000 c/u"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Agarradera de mesa",
+    "description": "Ideal para colgar bolsas, mochilas o accesorios en ferias, escritorios o mesas de trabajo. Se ajusta fácilmente sin necesidad de herramientas y optimiza el espacio en tu área de trabajo. Compacto, resistente y fácil de transportar.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/agarradera.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/agarradera1.jpg"
+      }
+    ],
+    "price": "$6500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "10cm x 5cm x 6cm",
+      "printTime": "10-15 días",
+      "promotion": "A partir de tres unidades $5000 c/u"
+    }
+  },
+  {
+    "id": 13,
+    "name": "Exhibidor stickers para reja",
+    "description": "Estante expositor compacto para stickers, ideal para ferias o puestos de venta. Cuenta con múltiples divisiones que permiten organizar los diseños de forma visible y atractiva. Su estructura liviana y resistente se adapta fácilmente a rejillas o paredes, optimizando el espacio y mejorando la presentación de tus productos. Aclaración no viene con los separadores de stickers",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/estantesticker.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/estantesticker1.jpg"
+      }
+    ],
+    "price": "$8500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "30cm x 4cm x 3cm",
+      "printTime": "10-15 días",
+      "promotion": "A partir de tres unidades $7000 c/u"
+    }
+  },
+  {
+    "id": 14,
+    "name": "Calesita para rejas",
+    "description": "Diseñado para rejillas metálicas, cuenta con múltiples ganchos que permiten exhibir varios llaveros de forma ordenada y giratoria, optimizando el espacio y mejorando la visibilidad de cada producto. Ideal para stands, ferias o espacios de venta reducidos.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/calesitareja.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/calesitareja1.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/calesitareja.mp4"
+      }
+    ],
+    "price": "$6000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "16cm x 7cm x 16cm",
+      "printTime": "10-15 días",
+      "promotion": "A partir de tres unidades $5000 c/u"
+    }
+  },
+  {
+    "id": 15,
+    "name": "Separadores de stickers",
+    "description": "Separadores para exhibidores, ideales para organizar stickers, pines u otros productos pequeños en estanterías o bandejas. Su diseño en forma de “L” permite dividir espacios fácilmente, manteniendo cada diseño ordenado y visible. Fabricados en material resistente y liviano, perfectos para ferias, stands o tiendas.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/separadores.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/separadores1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/separadores2.jpg"
+      }
+    ],
+    "price": "9u x $3000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "3cm x 4cm x 1cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 16,
+    "name": "Bandeja de stickers",
+    "description": "Bandeja organizadora para stickers con divisiones individuales, ideal para mantener cada diseño separado y visible. Su formato compacto permite una exhibición ordenada y profesional en mesas, estanterías o stands. Fabricada en material resistente y liviano, perfecta para ferias, tiendas o uso personal. Se puede modificar la forma (ejemplo:corazón), poner tu marca y tamaño de compartimiento",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/bandeja.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/bandeja1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/bandeja2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/bandeja3.jpg"
+      }
+    ],
+    "price": "$30000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "22cm x 26cm x 5cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 17,
+    "name": "Cajita plegable",
+    "description": "Nuestra caja organizadora plegable es ideal para mantener todo en orden, ya sea en casa, la oficina o tu emprendimiento. Su diseño ligero y resistente permite un fácil manejo, mientras que su sistema plegable te ayuda a ahorrar espacio cuando no la estés usando.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/cajita.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cajita1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/cajita2.jpg"
+      }
+    ],
+    "price": "$7000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "22cm x 26cm x 5cm",
+      "printTime": "10-15 días",
+      "promotion": "A partir de tres unidades $5500 c/u"
+    }
+  },
+  {
+    "id": 18,
+    "name": "Tendedero expositor",
+    "description": "Organiza, exhibe y enamora. Este mini perchero es perfecto para emprendedores que venden ropa para muñecas, creaciones en crochet o accesorios en miniatura",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/tendedero.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/tendedero1.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/tendedero.mp4"
+      }
+    ],
+    "price": "$16500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "15cm x 20cm x 10cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 19,
+    "name": "Expositor de libros",
+    "description": "Perfecto para emprendedores que buscan mostrar sus productos con estilo. Ideal para libros, mangas, cuadernos o agendas. Liviano, resistente y fácil de transportar.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/apoya.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/apoya1.jpg"
+      }
+    ],
+    "price": "$5500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "15cm x 10cm x 8cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 20,
+    "name": "Pikachu físicoculturista",
+    "description": "Una figura divertida y única para fans del anime y la impresión 3D. Ideal para decoración, regalo o simplemente para destacar en tu vitrina.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/pikachu.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/pikachu1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/pikachu2.jpg"
+      }
+    ],
+    "price": "$6000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "8cm x 4cm x 3cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 21,
+    "name": "Figura Gato Gojo",
+    "description": "Inspirado en Jujutsu Kaisen, este gatito con onda es perfecto para fans del anime y coleccionistas. ¡Ideal para decorar tu espacio con actitud!",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/gato.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/gato1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/gato2.jpg"
+      }
+    ],
+    "price": "$5000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "5cm x 3cm x 3cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 22,
+    "name": "Brazo para celulares",
+    "description": "Ideal para grabar videos, hacer lives o trabajar con las manos libres.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/brazo.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/brazo1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/brazo2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/brazo3.jpg"
+      }
+    ],
+    "price": "$14000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Varias",
+      "printTime": "10-15 días",
+      "promotion": "-"
     }
   }
 ]
