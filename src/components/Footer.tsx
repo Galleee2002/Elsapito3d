@@ -32,8 +32,8 @@ const Footer = () => {
               <div className="text-showroom">
                 <p>
                   Retiro presencial en @BunnyClubShowroom Maipú 484 Galeria
-                  Maipú Local 24- Horarios: Lunes a Viernes de 14hs a 19hs y
-                  Sábados de 10hs a 13hs
+                  Maipú Local 24- Horarios: Martes a Viernes de 14hs a 19hs y
+                  Sábados de 12hs a 16hs
                 </p>
               </div>
             </div>
