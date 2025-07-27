@@ -594,5 +594,40 @@
       "printTime": "10-15 días",
       "promotion": "-"
     }
+  },
+  {
+    "id": 23,
+    "name": "Mesita desarmable",
+    "description": "Mesita desarmable para exhibir productos, ideal para ferias, stands o tiendas. Su diseño compacto y resistente permite una exhibición ordenada y profesional en mesas, estanterías o stands. Fabricada en material resistente y liviano, perfecta para ferias, tiendas o uso personal. Soporta hasta 1kg sin problemas",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/mesita1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/mesita2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/mesita3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/mesita4.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/mesita5.jpg"
+      }
+    ],
+    "price": "$22000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "20cm x 38cm x 20cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
   }
 ]

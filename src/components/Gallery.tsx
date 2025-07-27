@@ -65,6 +65,13 @@ const Gallery = () => {
         color: "#FF6B6B",
       },
       {
+        id: 23,
+        image: "/img/rosapastel.jpg",
+        title: "Colores disponibles",
+        description: "Rosa pastel",
+        color: "#FFB6C1",
+      },
+      {
         id: 14,
         image: "/img/rosa.jpg",
         title: "Colores disponibles",
@@ -105,6 +112,13 @@ const Gallery = () => {
         title: "Colores disponibles",
         description: "Azul",
         color: "#00446A",
+      },
+      {
+        id: 24,
+        image: "/img/celeste.jpg",
+        title: "Colores disponibles",
+        description: "Celeste",
+        color: "#0077BE",
       },
       {
         id: 4,
