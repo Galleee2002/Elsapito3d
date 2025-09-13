@@ -74,12 +74,12 @@
         "src": "/img/calesita2.jpg"
       }
     ],
-    "price": " $13000 ",
+    "price": " $14500 ",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "Variable",
       "printTime": "10-15 días",
-      "promotion": "Calesita tres niveles $15.000"
+      "promotion": "Calesita tres niveles $16.500"
     }
   },
   {
@@ -271,7 +271,7 @@
         "src": "/img/ruletafortuna3.jpg"
       }
     ],
-    "price": "$18000 - $22000",
+    "price": "$20000 - $25000",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "20cm x 30cm x 12cm",
@@ -479,7 +479,7 @@
         "src": "/videos/tendedero.mp4"
       }
     ],
-    "price": "$16500",
+    "price": "$18000",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "15cm x 20cm x 10cm",
@@ -556,7 +556,7 @@
         "src": "/img/gato2.jpg"
       }
     ],
-    "price": "$5000",
+    "price": "$4000",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "5cm x 3cm x 3cm",
@@ -587,7 +587,7 @@
         "src": "/img/brazo3.jpg"
       }
     ],
-    "price": "$14000",
+    "price": "$16000",
     "details": {
       "materials": ["PLA+"],
       "dimensions": "Varias",
@@ -626,6 +626,268 @@
     "details": {
       "materials": ["PLA+"],
       "dimensions": "20cm x 38cm x 20cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 24,
+    "name": " Hornet con zapatillas de hollow night",
+    "description": "Figura minimalista de Hornet, inspirada en Hollow Knight, con un divertido diseño usando zapatillas. Compacta, ligera y perfecta para decorar tu escritorio, estantería o stand en ferias. Ideal para fans y coleccionistas que buscan un toque original",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/hornet_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/hornet_2.jpg"
+      }
+    ],
+    "price": "$5000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "7cm x 8cm x 10cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 25,
+    "name": "Llaveros R.E.P.O",
+    "description": "Divertidos llaveros inspirados en REPO, con su icónico diseño y ojos saltones. Disponibles en varios colores, son livianos, resistentes y perfectos para personalizar tus llaves, mochila o estuche.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/REPO_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/REPO_2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/REPO_3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/REPO_4.jpg"
+      }
+    ],
+    "price": "$3000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "4cm x 4cm x 4cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 26,
+    "name": "Ganchos para panel",
+    "description": "Dale una segunda vida a tus paneles con estos ganchos de 3cm, 6cm y 9cm de largo a elección, el combo viene con 1 gancho + 1 adaptador para panel por unidad. Podes pegarlos a los paneles con cualquier pegamento o cinta doble faz",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/panel_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/panel_3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/panel_4.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/panel_5.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/panel_video_2.mp4"
+      }
+    ],
+    "price": "$2500 (gancho + adaptador de panel)",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variadas",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 27,
+    "name": "Tarjeteros para panel",
+    "description": "Práctico tarjetero para panel, ideal para exhibir tarjetas de presentación, precios o información de productos. Incluye 1 tarjetero y 1 adaptador para panel por unidad, listo para colocar y mantener tu exhibición ordenada y profesional.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/tarjetero_panel_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/tarjetero_panel_3.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/tarjetero_panel_video_2.mp4"
+      }
+    ],
+    "price": "$6000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "8cm x 5cm x 5cm",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 28,
+    "name": "Calesita para panel",
+    "description": "Práctico tarjetero para panel, ideal para exhibir tarjetas de presentación, precios o información de productos. Incluye 1 tarjetero y 1 adaptador para panel por unidad, listo para colocar y mantener tu exhibición ordenada y profesional.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/calesita_panel_1.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/calesita_panel_video_2.mp4"
+      }
+    ],
+    "price": "$8500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 29,
+    "name": "Calesita para panel",
+    "description": "Exhibidor giratorio tipo calesita para panel, ideal para mostrar llaveros, accesorios o productos pequeños de forma ordenada y accesible. Compacto, resistente y fácil de instalar.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/calesita_panel_1.jpg"
+      },
+      {
+        "type": "video",
+        "src": "/videos/calesita_panel_video_2.mp4"
+      }
+    ],
+    "price": "$8500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 30,
+    "name": "Hornet y caballero de hollow night",
+    "description": "Set de figuras inspiradas en Hollow Knight, con el Caballero y Hornet en bases detalladas. Perfectas para exhibir en escritorio, estantería o stand. Fabricadas en material resistente, con diseño cuidado para fans y coleccionistas del juego.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/hollow_night_caballero_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/hollow_night_caballero_2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/hollow_night_caballero_3.jpg"
+      }
+    ],
+    "price": "$6000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
+      "printTime": "10-15 días",
+      "promotion": "$10000 las dos unidades"
+    }
+  },
+  {
+    "id": 31,
+    "name": "Conectores para rejas",
+    "description": "Conectores resistentes para ensamblar paneles tipo reja de forma firme y segura. Ideales para armar estructuras modulares de exhibición o almacenamiento.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/conectores_reja_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/conectores_reja_2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/conectores_reja_3.jpg"
+      }
+    ],
+    "price": "$1500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 32,
+    "name": "Stand para muñecas monster high",
+    "description": "Base de exhibición ideal para muñecas tipo Monster High, Barbie u otras figuras. Mantiene la muñeca de pie de forma estable y elegante, perfecta para vitrinas, estanterías o colecciones.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/stand_monster.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/stand_monster_2.jpg"
+      }
+    ],
+    "price": "$6000",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
+      "printTime": "10-15 días",
+      "promotion": "-"
+    }
+  },
+  {
+    "id": 32,
+    "name": "Soporte para estudio fotográfico",
+    "description": "Práctico soporte para sujetar fondos de fotografía de manera firme y estable. Ideal para estudios caseros, creadores de contenido y fotografía de productos. Ligero, portátil y fácil de usar.",
+
+    "media": [
+      {
+        "type": "image",
+        "src": "/img/soporte_fotografia_1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/img/soporte_fotografia_2.jpg"
+      }
+    ],
+    "price": "$4500",
+    "details": {
+      "materials": ["PLA+"],
+      "dimensions": "Variable",
       "printTime": "10-15 días",
       "promotion": "-"
     }
