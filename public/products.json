@@ -771,29 +771,6 @@
   },
   {
     "id": 29,
-    "name": "Calesita para panel",
-    "description": "Exhibidor giratorio tipo calesita para panel, ideal para mostrar llaveros, accesorios o productos pequeños de forma ordenada y accesible. Compacto, resistente y fácil de instalar.",
-
-    "media": [
-      {
-        "type": "image",
-        "src": "/img/calesita_panel_1.jpg"
-      },
-      {
-        "type": "video",
-        "src": "/videos/calesita_panel_video_2.mp4"
-      }
-    ],
-    "price": "$8500",
-    "details": {
-      "materials": ["PLA+"],
-      "dimensions": "Variable",
-      "printTime": "10-15 días",
-      "promotion": "-"
-    }
-  },
-  {
-    "id": 30,
     "name": "Hornet y caballero de hollow night",
     "description": "Set de figuras inspiradas en Hollow Knight, con el Caballero y Hornet en bases detalladas. Perfectas para exhibir en escritorio, estantería o stand. Fabricadas en material resistente, con diseño cuidado para fans y coleccionistas del juego.",
 
@@ -820,7 +797,7 @@
     }
   },
   {
-    "id": 31,
+    "id": 30,
     "name": "Conectores para rejas",
     "description": "Conectores resistentes para ensamblar paneles tipo reja de forma firme y segura. Ideales para armar estructuras modulares de exhibición o almacenamiento.",
 
@@ -847,7 +824,7 @@
     }
   },
   {
-    "id": 32,
+    "id": 31,
     "name": "Stand para muñecas monster high",
     "description": "Base de exhibición ideal para muñecas tipo Monster High, Barbie u otras figuras. Mantiene la muñeca de pie de forma estable y elegante, perfecta para vitrinas, estanterías o colecciones.",
 
